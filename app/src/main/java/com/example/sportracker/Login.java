@@ -99,4 +99,6 @@ public class Login extends AppCompatActivity {
         Intent signInIntent = signInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
+    // TODO: Save user firebase doc
 }
