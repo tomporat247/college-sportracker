@@ -68,6 +68,12 @@ public class Login extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        advanceToMainActivity();
+    }
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
 
@@ -80,11 +86,6 @@ public class Login extends AppCompatActivity {
                         }
                     }
                 });
-    }
-
-    protected void onStart() {
-        super.onStart();
-        advanceToMainActivity();
     }
 
     private void signIn() {
