@@ -21,11 +21,18 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-public class Login extends AppCompatActivity {
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+public class LoginActivity extends AppCompatActivity {
     private final int RC_SIGN_IN = 1;
     private FirebaseAuth auth;
     private GoogleSignInClient signInClient;
+    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +40,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         Button loginButton = findViewById(R.id.login);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signIn();
-            }
-        });
+        loginButton.setOnClickListener(view -> signIn());
 
         auth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -66,37 +68,55 @@ public class Login extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        advanceToMainActivity();
+    }
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
 
         auth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = auth.getCurrentUser();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            Toast.makeText(getApplicationContext(), "signed in", Toast.LENGTH_SHORT).show();
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Sorry authentication failed ", Toast.LENGTH_SHORT).show();
-
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        advanceToMainActivity();
                     }
                 });
-    }
-
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = auth.getCurrentUser();
-        if (currentUser != null) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-        }
     }
 
     private void signIn() {
         Intent signInIntent = signInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void advanceToMainActivity() {
+        FirebaseUser user = auth.getCurrentUser();
+        if (user != null) {
+            upsertUserFireStoreDocument();
+            Toast.makeText(getApplicationContext(), "Signed in as " + user.getEmail(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    private void upsertUserFireStoreDocument() {
+        FirebaseUser user = auth.getCurrentUser();
+        if (user != null) {
+            firestore.collection("users").document(user.getUid()).set(getUserDataMap());
+        }
+    }
+
+    private Map<String, Object> getUserDataMap() {
+        FirebaseUser user = auth.getCurrentUser();
+        Map<String, Object> userMap = new HashMap<>();
+        if (user != null) {
+            userMap.put("name", user.getDisplayName());
+            userMap.put("email", user.getEmail());
+            userMap.put("photoUrl", Objects.requireNonNull(user.getPhotoUrl()).toString());
+            userMap.put("lastLoginDate", new Date().getTime());
+        }
+
+        return userMap;
     }
 }
