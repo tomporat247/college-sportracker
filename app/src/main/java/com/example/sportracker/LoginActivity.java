@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private final int RC_SIGN_IN = 1;
     private FirebaseAuth auth;
     private GoogleSignInClient signInClient;
