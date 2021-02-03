@@ -26,13 +26,13 @@ public class HomeFragment extends Fragment {
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        this.setupList(root);
-        this.listenToContestsChanges(root);
+        this.setupContestList(root);
+        this.listenToUserActions(root);
 
         return root;
     }
 
-    private void setupList(View root) {
+    private void setupContestList(View root) {
         final RecyclerView recyclerView = root.findViewById(R.id.contests_recycler_view);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    private void listenToContestsChanges(View root) {
+    private void listenToUserActions(View root) {
         this.homeViewModel.getContests().observe(getViewLifecycleOwner(), contestListAdapter::setContests);
         FloatingActionButton fab = root.findViewById(R.id.addContestFab);
 
