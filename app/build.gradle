@@ -33,6 +33,7 @@ apply plugin: 'com.google.gms.google-services'
 
 dependencies {
 
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def lifecycle_version = "2.2.0"
     def arch_version = "2.1.0"
 

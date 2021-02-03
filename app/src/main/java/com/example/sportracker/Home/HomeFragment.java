@@ -8,13 +8,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sportracker.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
@@ -44,9 +43,7 @@ public class HomeFragment extends Fragment {
 
     private void listenToUserActions(View root) {
         this.homeViewModel.getContests().observe(getViewLifecycleOwner(), contestListAdapter::setContests);
-        FloatingActionButton fab = root.findViewById(R.id.addContestFab);
 
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+        root.findViewById(R.id.addContestFab).setOnClickListener(view -> Navigation.findNavController(root).navigate(R.id.action_nav_home_to_enterContestPlayers));
     }
 }
