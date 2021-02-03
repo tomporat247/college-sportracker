@@ -78,8 +78,6 @@ public class EnterContestPlayersFragment extends Fragment {
 
     private void onUserRemoved(View view) {
         String email = ((TextView) ((View) view.getParent()).findViewById(R.id.userEmail)).getText().toString();
-        if (!this.viewModel.isCurrentUserEmail(email)) {
-            this.viewModel.removeUserByEmail(email);
-        }
+        this.viewModel.removeUserByEmail(email);
     }
 }

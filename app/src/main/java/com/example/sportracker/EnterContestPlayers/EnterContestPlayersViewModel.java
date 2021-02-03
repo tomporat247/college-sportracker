@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sportracker.Models.User;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -29,10 +28,6 @@ public class EnterContestPlayersViewModel extends ViewModel {
 
     public LiveData<List<User>> getUsers() {
         return this.users;
-    }
-
-    private boolean doesUserEmailExist(String email) {
-        return this.users.getValue().stream().filter(user -> user.getEmail().equals(email)).findFirst().orElse(null) != null;
     }
 
     public CompletableFuture<User> addUser(String email) {
@@ -60,14 +55,20 @@ public class EnterContestPlayersViewModel extends ViewModel {
         return completableFuture;
     }
 
-    public boolean isCurrentUserEmail(String email) {
-        return this.auth.getCurrentUser().getEmail().equals(email);
+    public void removeUserByEmail(String email) {
+        if (!this.isCurrentUserEmail(email)) {
+            List<User> userList = users.getValue();
+            userList.removeIf(user -> user.getEmail().equals(email));
+            users.setValue(userList);
+        }
     }
 
-    public void removeUserByEmail(String email) {
-        List<User> userList = users.getValue();
-        userList.removeIf(user -> user.getEmail().equals(email));
-        users.setValue(userList);
+    private boolean doesUserEmailExist(String email) {
+        return this.users.getValue().stream().filter(user -> user.getEmail().equals(email)).findFirst().orElse(null) != null;
+    }
+
+    private boolean isCurrentUserEmail(String email) {
+        return this.auth.getCurrentUser().getEmail().equals(email);
     }
 
     private void addSelfUser() {
