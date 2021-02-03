@@ -13,4 +13,5 @@
 
     <string name="login">Sign In With Google</string>
     <string name="greeting">Your\'e just one moment away\nfrom enjoying Sportracker</string>
+    <string name="enter_user_email">Enter user email…</string>
 </resources>

@@ -2,6 +2,8 @@ package com.example.sportracker.Models;
 
 import com.google.type.DateTime;
 
+import java.util.Map;
+
 public class User {
     private String id;
     private String email;
@@ -13,6 +15,13 @@ public class User {
         this.setEmail(email);
         this.setName(name);
         this.setPhotoUrl(photoUrl);
+    }
+
+    public User(Map<String, Object> firestoreDocument) {
+        this.setId((String) firestoreDocument.get("id"));
+        this.setEmail((String) firestoreDocument.get("email"));
+        this.setName((String) firestoreDocument.get("name"));
+        this.setPhotoUrl((String) firestoreDocument.get("photoUrl"));
     }
 
     public String getId() {
