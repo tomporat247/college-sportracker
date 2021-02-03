@@ -16,27 +16,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sportracker.R;
 import com.example.sportracker.Utils.DrawableClickListener;
 import com.example.sportracker.Utils.EditTextWithDrawable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 public class EnterContestPlayersFragment extends Fragment {
+    public static final int MINIMUM_CONTEST_USER_AMOUNT = 2;
     private EnterContestPlayersViewModel viewModel;
     private final UserListAdapter userListAdapter = new UserListAdapter(this::onUserRemoved);
+    private View root;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.viewModel =
                 new ViewModelProvider(this).get(EnterContestPlayersViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_enter_contest_players, container, false);
+        this.root = inflater.inflate(R.layout.fragment_enter_contest_players, container, false);
 
-        this.setupUserList(root);
-        this.listenToUserActions(root);
+        this.setupUserList();
+        this.listenToUserActions();
 
         return root;
     }
 
-    private void setupUserList(View root) {
-        final RecyclerView recyclerView = root.findViewById(R.id.userRecyclerView);
+    private void setupUserList() {
+        final RecyclerView recyclerView = this.root.findViewById(R.id.userRecyclerView);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 layoutManager.getOrientation());
@@ -45,29 +48,32 @@ public class EnterContestPlayersFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    private void listenToUserActions(View root) {
-        this.viewModel.getUsers().observe(getViewLifecycleOwner(), userListAdapter::setUsers);
+    private void listenToUserActions() {
+        this.viewModel.getUsers().observe(getViewLifecycleOwner(), users -> {
+            this.userListAdapter.setUsers(users);
+            this.determineProceedButtonVisibility(users.size());
+        });
 
-        EditTextWithDrawable editTextTextUserEmail = root.findViewById(R.id.editTextTextUserEmail);
+        EditTextWithDrawable editTextTextUserEmail = this.root.findViewById(R.id.editTextTextUserEmail);
         editTextTextUserEmail.setDrawableClickListener(target -> {
             if (target == DrawableClickListener.DrawablePosition.RIGHT) {
-                this.onAddUser(editTextTextUserEmail.getText().toString(), root, editTextTextUserEmail);
+                this.onAddUser(editTextTextUserEmail.getText().toString(), editTextTextUserEmail);
             }
         });
     }
 
-    private void onAddUser(String email, View root, EditText editText) {
+    private void determineProceedButtonVisibility(int userAmount) {
+        final FloatingActionButton fab = this.root.findViewById(R.id.proceedToContestFab);
+        fab.setVisibility(userAmount >= MINIMUM_CONTEST_USER_AMOUNT ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    private void onAddUser(String email, EditText editText) {
         editText.setText("");
-        if (email.isEmpty()) {
-            Snackbar.make(root, "Insert email", Snackbar.LENGTH_LONG)
-                    .show();
-        } else {
-            this.viewModel.addUser(email).whenComplete((user, exception) -> {
-                if (exception != null) {
-                    Snackbar.make(root, "No user found for email: \"" + email + '"', Snackbar.LENGTH_LONG).show();
-                }
-            });
-        }
+        this.viewModel.addUser(email).whenComplete((user, exception) -> {
+            if (exception != null) {
+                Snackbar.make(this.root, exception.getMessage(), Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void onUserRemoved(View view) {

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sportracker.Models.User;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,21 +31,32 @@ public class EnterContestPlayersViewModel extends ViewModel {
         return this.users;
     }
 
+    private boolean doesUserEmailExist(String email) {
+        return this.users.getValue().stream().filter(user -> user.getEmail().equals(email)).findFirst().orElse(null) != null;
+    }
+
     public CompletableFuture<User> addUser(String email) {
         CompletableFuture<User> completableFuture = new CompletableFuture<>();
-        this.firestore.collection("users").whereEqualTo("email", email).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (task.getResult().isEmpty()) {
-                    completableFuture.completeExceptionally(new Resources.NotFoundException("User not found"));
-                } else {
-                    DocumentSnapshot document = task.getResult().getDocuments().get(0);
-                    User user = new User(document.getId(), document.getData());
-                    List<User> userList = users.getValue();
-                    userList.add(user);
-                    users.setValue(userList);
+
+        if (email.isEmpty()) {
+            completableFuture.completeExceptionally(new Resources.NotFoundException("Insert email"));
+        } else if (this.doesUserEmailExist(email)) {
+            completableFuture.completeExceptionally(new Resources.NotFoundException("User already exists"));
+        } else {
+            this.firestore.collection("users").whereEqualTo("email", email).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    if (task.getResult().isEmpty()) {
+                        completableFuture.completeExceptionally(new Resources.NotFoundException("User not found"));
+                    } else {
+                        DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                        User user = new User(document.getId(), document.getData());
+                        List<User> userList = users.getValue();
+                        userList.add(user);
+                        users.setValue(userList);
+                    }
                 }
-            }
-        });
+            });
+        }
         return completableFuture;
     }
 
