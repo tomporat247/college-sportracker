@@ -1,7 +1,6 @@
 package com.example.sportracker.Models;
 
-import com.google.type.DateTime;
-
+import java.util.Date;
 import java.util.Map;
 
 public class User {
@@ -9,6 +8,7 @@ public class User {
     private String email;
     private String name;
     private String photoUrl;
+    private Date lastLoginDate;
 
     public User(String id, String email, String name, String photoUrl) {
         this.setId(id);
@@ -17,11 +17,12 @@ public class User {
         this.setPhotoUrl(photoUrl);
     }
 
-    public User(Map<String, Object> firestoreDocument) {
-        this.setId((String) firestoreDocument.get("id"));
+    public User(String id, Map<String, Object> firestoreDocument) {
+        this.setId(id);
         this.setEmail((String) firestoreDocument.get("email"));
         this.setName((String) firestoreDocument.get("name"));
         this.setPhotoUrl((String) firestoreDocument.get("photoUrl"));
+        this.setLastLoginDate(new Date((Long) firestoreDocument.get("lastLoginDate")));
     }
 
     public String getId() {
@@ -56,13 +57,11 @@ public class User {
         this.photoUrl = photoUrl;
     }
 
-    public DateTime getLastLoginDate() {
+    public Date getLastLoginDate() {
         return lastLoginDate;
     }
 
-    public void setLastLoginDate(DateTime lastLoginDate) {
+    public void setLastLoginDate(Date lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
     }
-
-    private DateTime lastLoginDate;
 }

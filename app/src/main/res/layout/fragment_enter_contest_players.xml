@@ -6,14 +6,13 @@
     android:orientation="vertical"
     >
 
-    <EditText
+    <com.example.sportracker.Utils.EditTextWithDrawable
         android:id="@+id/editTextTextUserEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:padding="20sp"
-        android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
+        android:drawableRight="@drawable/ic_baseline_add_circle_outline_24"
         android:hint="@string/enter_user_email"
         android:autofillHints="Enter user email" />
 

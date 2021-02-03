@@ -18,6 +18,11 @@ import java.util.List;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserViewHolder> {
     private List<User> users = Collections.emptyList();
+    private final View.OnClickListener onUserRemoved;
+
+    public UserListAdapter(View.OnClickListener onUserRemoved) {
+        this.onUserRemoved = onUserRemoved;
+    }
 
     @NonNull
     @Override
@@ -47,12 +52,19 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         private final TextView userName;
         private final TextView userEmail;
         private final ImageView userImage;
+        private final ImageView removeUserIcon;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             this.userName = itemView.findViewById(R.id.userName);
             this.userEmail = itemView.findViewById(R.id.userEmail);
             this.userImage = itemView.findViewById(R.id.userImage);
+            this.removeUserIcon = itemView.findViewById(R.id.removeUser);
+            this.listenToClicks();
+        }
+
+        private void listenToClicks() {
+            this.removeUserIcon.setOnClickListener(onUserRemoved);
         }
     }
 }
