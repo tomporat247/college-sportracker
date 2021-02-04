@@ -15,4 +15,11 @@
     <string name="greeting">Your\'e just one moment away\nfrom enjoying Sportracker</string>
     <string name="enter_user_email">Enter user email…</string>
     <string name="fragment_contest_title">Contest</string>
+    <string name="outColumnHeaderText">Out</string>
+    <string name="teamAColumnHeader">Team A</string>
+    <string name="teamBColumnHeader">Team B</string>
+    <string name="infoButton">Info</string>
+    <string name="addMatchButton">Add</string>
+    <string name="saveContestButton">Save</string>
+    <string name="fragment_enter_users_title">Enter Users</string>
 </resources>

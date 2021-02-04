@@ -7,4 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="outColumnBackground">#292929</color>
+    <color name="outColumnHeaderText">#cccccc</color>
+    <color name="teamABackground">#1f1f1f</color>
+    <color name="teamAColumnHeader">#ffffff</color>
+    <color name="teamBBackground">#212129</color>
+    <color name="teamBColumnHeader">#ffffff</color>
 </resources>

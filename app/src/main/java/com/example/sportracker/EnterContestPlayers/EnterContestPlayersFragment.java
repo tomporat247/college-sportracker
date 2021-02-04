@@ -18,8 +18,10 @@ import com.example.sportracker.Models.User;
 import com.example.sportracker.R;
 import com.example.sportracker.Utils.DrawableClickListener;
 import com.example.sportracker.Utils.EditTextWithDrawable;
+import com.example.sportracker.Utils.Keyboard;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
 
 public class EnterContestPlayersFragment extends Fragment {
     public static final int MINIMUM_CONTEST_USER_AMOUNT = 2;
@@ -86,6 +88,7 @@ public class EnterContestPlayersFragment extends Fragment {
     }
 
     private void navigateToContestControl() {
+        Keyboard.hideKeyboard(getActivity());
         Navigation.findNavController(this.root).navigate(
                 EnterContestPlayersFragmentDirections.actionEnterContestPlayersToContestControl(
                         this.viewModel.getUsers().getValue().toArray(new User[0])));

@@ -1,14 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ContestControl.ContestControlFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="xxx" />
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/outColumnBackground"
+            android:orientation="vertical"
+            tools:ignore="NestedWeights">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textStyle="italic"
+                android:textColor="@color/outColumnHeaderText"
+                android:padding="10sp"
+                android:text="@string/outColumnHeaderText" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/outRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/teamABackground"
+            android:orientation="vertical"
+            tools:ignore="NestedWeights">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textStyle="italic"
+                android:textColor="@color/teamAColumnHeader"
+                android:padding="10sp"
+                android:text="@string/teamAColumnHeader" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/teamARecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/teamBBackground"
+            android:orientation="vertical"
+            tools:ignore="NestedWeights">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textStyle="italic"
+                android:textColor="@color/teamBColumnHeader"
+                android:padding="10sp"
+                android:text="@string/teamBColumnHeader" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/teamBRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/moreInfoButton"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:layout_weight="1"
+            android:backgroundTint="#616161"
+            android:text="@string/infoButton"
+            app:icon="@drawable/ic_baseline_info_24"
+            app:iconGravity="textStart"
+            tools:ignore="NestedWeights" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/newMatchButton"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:layout_weight="1"
+            android:backgroundTint="#388e3d"
+            android:text="@string/addMatchButton"
+            app:icon="@drawable/ic_baseline_gavel_24"
+            app:iconGravity="textStart"
+            tools:ignore="NestedWeights" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveButton"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:layout_weight="1"
+            android:backgroundTint="#02a9f5"
+            android:text="@string/saveContestButton"
+            app:icon="@drawable/ic_baseline_save_alt_24"
+            app:iconGravity="textStart"
+            tools:ignore="NestedWeights" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/enterContestPlayers"
         android:name="com.example.sportracker.EnterContestPlayers.EnterContestPlayersFragment"
-        android:label="fragment_enter_players_title"
+        android:label="@string/fragment_enter_users_title"
         tools:layout="@layout/fragment_enter_contest_players" >
         <action
             android:id="@+id/action_enterContestPlayers_to_contestControl"
