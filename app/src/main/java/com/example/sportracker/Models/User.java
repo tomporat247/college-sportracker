@@ -1,9 +1,12 @@
 package com.example.sportracker.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 import java.util.Map;
 
-public class User {
+public class User implements Parcelable {
     private String id;
     private String email;
     private String name;
@@ -24,6 +27,38 @@ public class User {
         this.setPhotoUrl((String) firestoreDocument.get("photoUrl"));
         this.setLastLoginDate(new Date((Long) firestoreDocument.get("lastLoginDate")));
     }
+
+    protected User(Parcel in) {
+        id = in.readString();
+        email = in.readString();
+        name = in.readString();
+        photoUrl = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(email);
+        dest.writeString(name);
+        dest.writeString(photoUrl);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String getId() {
         return id;
