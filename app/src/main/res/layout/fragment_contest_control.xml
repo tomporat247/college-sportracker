@@ -32,7 +32,7 @@
                 android:text="@string/outColumnHeaderText" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/outRecyclerView"
+                android:id="@+id/teamOutRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
