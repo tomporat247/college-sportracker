@@ -69,7 +69,6 @@ public class UserTeamListAdapter extends RecyclerView.Adapter<UserTeamListAdapte
                 ClipData data = new ClipData(tag, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
                 View.DragShadowBuilder dragShadowBuilder = new View.DragShadowBuilder(v);
                 v.startDragAndDrop(data, dragShadowBuilder, v, 0);
-                v.setVisibility(View.INVISIBLE);
                 return true;
             });
         }

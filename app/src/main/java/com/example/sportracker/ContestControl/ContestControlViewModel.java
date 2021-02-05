@@ -9,11 +9,13 @@ import com.example.sportracker.Models.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class ContestControlViewModel extends ViewModel {
-    private List<User> users;
     private final MutableLiveData<HashMap<Team, List<User>>> teamToUsers;
 
     public ContestControlViewModel() {
@@ -26,9 +28,8 @@ public class ContestControlViewModel extends ViewModel {
     }
 
     public void setUsers(List<User> users) {
-        this.users = users;
         HashMap<Team, List<User>> teamToUsersValue = new HashMap<>();
-        teamToUsersValue.put(Team.OUT, this.users);
+        teamToUsersValue.put(Team.OUT, users);
         teamToUsersValue.put(Team.A, new ArrayList<>());
         teamToUsersValue.put(Team.B, new ArrayList<>());
         this.teamToUsers.setValue(teamToUsersValue);
@@ -36,11 +37,15 @@ public class ContestControlViewModel extends ViewModel {
 
     public void swapUserTeam(String userId, Team newTeam) {
         HashMap<Team, List<User>> teamToUsersValue = this.teamToUsers.getValue();
-        User user = this.users.stream().filter(currentUser -> currentUser.getId().equals(userId)).findFirst().orElse(null);
+        User user = this.getAllUsers().stream().filter(currentUser -> currentUser.getId().equals(userId)).findFirst().orElse(null);
         if (user != null) {
             Arrays.stream(Team.values()).forEach(team -> teamToUsersValue.get(team).removeIf(currentUser -> currentUser.getId().equals(userId)));
             teamToUsersValue.get(newTeam).add(user);
             this.teamToUsers.setValue(teamToUsersValue);
         }
+    }
+
+    private List<User> getAllUsers() {
+        return this.teamToUsers.getValue().values().stream().flatMap(Collection::stream).collect(Collectors.toList());
     }
 }

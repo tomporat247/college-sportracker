@@ -1,6 +1,9 @@
 package com.example.sportracker.ContestControl;
 
+import android.content.ClipData;
+import android.content.ClipDescription;
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,7 @@ public class ContestControlFragment extends Fragment {
     private View root;
     private HashMap<Team, UserTeamListAdapter> teamToAdapter;
     private HashMap<Team, Integer> teamToViewId;
+    private HashMap<Integer, Team> viewIdToTeam;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,9 +48,13 @@ public class ContestControlFragment extends Fragment {
         this.teamToAdapter.put(Team.A, new UserTeamListAdapter());
         this.teamToAdapter.put(Team.B, new UserTeamListAdapter());
         this.teamToViewId = new HashMap<>();
+        this.viewIdToTeam = new HashMap<>();
         this.teamToViewId.put(Team.OUT, R.id.teamOutRecyclerView);
         this.teamToViewId.put(Team.A, R.id.teamARecyclerView);
         this.teamToViewId.put(Team.B, R.id.teamBRecyclerView);
+        this.viewIdToTeam.put(R.id.teamOutRecyclerView, Team.OUT);
+        this.viewIdToTeam.put(R.id.teamARecyclerView, Team.A);
+        this.viewIdToTeam.put(R.id.teamBRecyclerView, Team.B);
     }
 
     private void setupTeamLists() {
@@ -64,5 +72,34 @@ public class ContestControlFragment extends Fragment {
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(this.teamToAdapter.get(team));
         recyclerView.setLayoutManager(layoutManager);
+        this.listenToUserDragDrop((View) recyclerView.getParent());
+    }
+
+    private void listenToUserDragDrop(View target) {
+        target.setOnDragListener((view, event) -> {
+            switch (event.getAction()) {
+                case DragEvent.ACTION_DRAG_STARTED:
+                    return event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN);
+                case DragEvent.ACTION_DRAG_ENTERED:
+                case DragEvent.ACTION_DRAG_EXITED:
+                case DragEvent.ACTION_DRAG_ENDED: {
+                    view.invalidate();
+                    return true;
+                }
+                case DragEvent.ACTION_DRAG_LOCATION:
+                    return true;
+                case DragEvent.ACTION_DROP: {
+                    view.invalidate();
+                    ClipData.Item item = event.getClipData().getItemAt(0);
+                    String userId = item.getText().toString();
+                    Team team = viewIdToTeam.get(((ViewGroup) view).getChildAt(1).getId());
+                    viewModel.swapUserTeam(userId, team);
+
+                    return true;
+                }
+                default:
+                    return false;
+            }
+        });
     }
 }
