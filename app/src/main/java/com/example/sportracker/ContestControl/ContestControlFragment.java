@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sportracker.Models.Team;
 import com.example.sportracker.R;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +26,7 @@ import java.util.HashMap;
 public class ContestControlFragment extends Fragment {
     private ContestControlViewModel viewModel;
     private View root;
+    private MaterialButton addMatchButton;
     private HashMap<Team, UserTeamListAdapter> teamToAdapter;
     private HashMap<Team, Integer> teamToViewId;
     private HashMap<Integer, Team> viewIdToTeam;
@@ -35,9 +38,11 @@ public class ContestControlFragment extends Fragment {
                 new ViewModelProvider(this).get(ContestControlViewModel.class);
         this.viewModel.setUsers(new ArrayList<>(Arrays.asList(ContestControlFragmentArgs.fromBundle(getArguments()).getUsers())));
         this.root = inflater.inflate(R.layout.fragment_contest_control, container, false);
+        this.addMatchButton = this.root.findViewById(R.id.newMatchButton);
 
         this.initializeMaps();
         this.setupTeamLists();
+        this.listenToActionClicks();
 
         return root;
     }
@@ -60,8 +65,10 @@ public class ContestControlFragment extends Fragment {
     private void setupTeamLists() {
         Arrays.stream(Team.values()).forEach(this::setupTeamList);
 
-        this.viewModel.getTeamToUsers().observe(getViewLifecycleOwner(), teamToUsers ->
-                teamToUsers.keySet().forEach(team -> this.teamToAdapter.get(team).setUsers(teamToUsers.get(team))));
+        this.viewModel.getTeamToUsers().observe(getViewLifecycleOwner(), teamToUsers -> {
+            teamToUsers.keySet().forEach(team -> this.teamToAdapter.get(team).setUsers(teamToUsers.get(team)));
+            this.addMatchButton.setEnabled(teamToUsers.get(Team.A).size() > 0 && teamToUsers.get(Team.A).size() > 0);
+        });
     }
 
     private void setupTeamList(Team team) {
@@ -73,6 +80,14 @@ public class ContestControlFragment extends Fragment {
         recyclerView.setAdapter(this.teamToAdapter.get(team));
         recyclerView.setLayoutManager(layoutManager);
         this.listenToUserDragDrop((View) recyclerView.getParent());
+    }
+
+    private void listenToActionClicks() {
+        this.root.findViewById(R.id.newMatchButton).setOnClickListener(v -> {
+            // TODO: Show popup to pick winning team
+            this.viewModel.addMatch(Team.A);
+            Snackbar.make(this.root, "Match Added", Snackbar.LENGTH_LONG).show();
+        });
     }
 
     private void listenToUserDragDrop(View target) {

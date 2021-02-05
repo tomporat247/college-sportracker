@@ -1,5 +1,6 @@
 package com.example.sportracker.Models;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Contest {
@@ -35,5 +36,11 @@ public class Contest {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void addMatch(HashMap<Team, List<String>> teamToUserIds, Team winningTeam) {
+        List<String> winningTeamUserIds = teamToUserIds.get(winningTeam);
+        List<String> losingTeamUserIds = teamToUserIds.get(winningTeam == Team.A ? Team.B : Team.A);
+        this.matches.add(new Match(winningTeamUserIds, losingTeamUserIds));
     }
 }

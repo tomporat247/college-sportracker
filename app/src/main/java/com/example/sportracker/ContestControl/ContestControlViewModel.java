@@ -32,4 +32,8 @@ public class ContestControlViewModel extends ViewModel {
     public void swapUserTeam(String userId, Team newTeam) {
         ContestService.getInstance().swapUserTeam(userId, newTeam);
     }
+
+    public void addMatch(Team winningTeam) {
+        ContestService.getInstance().addMatch(winningTeam);
+    }
 }

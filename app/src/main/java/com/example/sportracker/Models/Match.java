@@ -8,10 +8,10 @@ public class Match {
     private List<String> losingTeamUserIds;
     private Date date;
 
-    public Match(List<String> winningTeamUserIds, List<String> losingTeamUserIds, Date date) {
+    public Match(List<String> winningTeamUserIds, List<String> losingTeamUserIds) {
         this.winningTeamUserIds = winningTeamUserIds;
         this.losingTeamUserIds = losingTeamUserIds;
-        this.date = date;
+        this.date = new Date();
     }
 
     public List<String> getWinningTeamUserIds() {
