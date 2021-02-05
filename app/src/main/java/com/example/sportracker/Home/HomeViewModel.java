@@ -19,9 +19,9 @@ public class HomeViewModel extends ViewModel {
         final ArrayList<User> tmpUsers = new ArrayList<>();
         final ArrayList<Contest> tmpContests = new ArrayList<>();
         tmpUsers.add(new User("1", "abc@gmail.com", "abc", "photo"));
-        tmpContests.add(new Contest("ContestA", tmpUsers));
-        tmpContests.add(new Contest("ContestB", tmpUsers));
-        tmpContests.add(new Contest("Lilach lilch lilchush", tmpUsers));
+        tmpContests.add(new Contest("ContestA", tmpUsers, new ArrayList<>()));
+        tmpContests.add(new Contest("ContestB", tmpUsers, new ArrayList<>()));
+        tmpContests.add(new Contest("Lilach lilch lilchush", tmpUsers, new ArrayList<>()));
         this.contests.setValue(tmpContests);
     }
 
