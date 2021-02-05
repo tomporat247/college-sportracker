@@ -1,5 +1,7 @@
 package com.example.sportracker.ContestControl;
 
+import android.content.ClipData;
+import android.content.ClipDescription;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,7 @@ public class UserTeamListAdapter extends RecyclerView.Adapter<UserTeamListAdapte
         holder.userName.setText(currentUser.getName());
         Picasso.get().load(currentUser.getPhotoUrl()).into(holder.userImage);
         holder.setTag(currentUser.getId());
+        holder.allowDrag();
     }
 
     @Override
@@ -57,6 +60,18 @@ public class UserTeamListAdapter extends RecyclerView.Adapter<UserTeamListAdapte
 
         private void setTag(String tag) {
             this.view.setTag(tag);
+        }
+
+        private void allowDrag() {
+            this.view.setOnLongClickListener(v -> {
+                String tag = v.getTag().toString();
+                ClipData.Item item = new ClipData.Item(tag);
+                ClipData data = new ClipData(tag, new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                View.DragShadowBuilder dragShadowBuilder = new View.DragShadowBuilder(v);
+                v.startDragAndDrop(data, dragShadowBuilder, v, 0);
+                v.setVisibility(View.INVISIBLE);
+                return true;
+            });
         }
     }
 }
