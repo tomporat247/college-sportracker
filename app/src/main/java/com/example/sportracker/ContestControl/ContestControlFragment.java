@@ -67,7 +67,7 @@ public class ContestControlFragment extends Fragment {
 
         this.viewModel.getTeamToUsers().observe(getViewLifecycleOwner(), teamToUsers -> {
             teamToUsers.keySet().forEach(team -> this.teamToAdapter.get(team).setUsers(teamToUsers.get(team)));
-            this.addMatchButton.setEnabled(teamToUsers.get(Team.A).size() > 0 && teamToUsers.get(Team.A).size() > 0);
+            this.addMatchButton.setEnabled(teamToUsers.get(Team.A).size() > 0 && teamToUsers.get(Team.B).size() > 0);
         });
     }
 
