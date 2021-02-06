@@ -1,38 +1,34 @@
 package com.example.sportracker.ContestInfo;
 
-import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.sportracker.R;
+import com.example.sportracker.ContestInfo.Matches.ContestInfoMatchesFragment;
+import com.example.sportracker.ContestInfo.Proof.ContestInfoProofFragment;
+import com.example.sportracker.ContestInfo.Users.ContestInfoUsersFragment;
 
 import java.util.HashMap;
 
 public class ContestInfoAdapter extends FragmentStateAdapter {
-    private final HashMap<Integer, Integer> positionToFragmentResourceId;
+    private final HashMap<Integer, Fragment> positionToFragment;
 
     public ContestInfoAdapter(Fragment fragment) {
         super(fragment);
-        this.positionToFragmentResourceId = new HashMap<>();
-        this.positionToFragmentResourceId.put(0, R.layout.fragment_enter_contest_players);
-        this.positionToFragmentResourceId.put(1, R.layout.fragment_enter_contest_players);
-        this.positionToFragmentResourceId.put(2, R.layout.fragment_enter_contest_players);
+        this.positionToFragment = new HashMap<>();
+        this.positionToFragment.put(0, new ContestInfoUsersFragment());
+        this.positionToFragment.put(1, new ContestInfoMatchesFragment());
+        this.positionToFragment.put(2, new ContestInfoProofFragment());
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment fragment = new ContestInfoInnerFragment();
-        Bundle args = new Bundle();
-        args.putInt(ContestInfoInnerFragment.layoutResourceId, this.positionToFragmentResourceId.get(position));
-        fragment.setArguments(args);
-        return fragment;
+        return this.positionToFragment.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return this.positionToFragmentResourceId.size();
+        return this.positionToFragment.size();
     }
 }
