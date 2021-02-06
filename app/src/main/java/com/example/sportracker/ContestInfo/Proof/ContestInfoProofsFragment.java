@@ -9,13 +9,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.sportracker.R;
 
-public class ContestInfoProofFragment extends Fragment {
+public class ContestInfoProofsFragment extends Fragment {
     private View root;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.root = inflater.inflate(R.layout.fragment_contest_info_proof, container, false);
+        this.root = inflater.inflate(R.layout.fragment_contest_info_proofs, container, false);
 
         return root;
     }

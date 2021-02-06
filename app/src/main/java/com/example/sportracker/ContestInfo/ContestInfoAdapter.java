@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.sportracker.ContestInfo.Matches.ContestInfoMatchesFragment;
-import com.example.sportracker.ContestInfo.Proof.ContestInfoProofFragment;
+import com.example.sportracker.ContestInfo.Proof.ContestInfoProofsFragment;
 import com.example.sportracker.ContestInfo.Users.ContestInfoUsersFragment;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class ContestInfoAdapter extends FragmentStateAdapter {
         this.positionToFragment = new HashMap<>();
         this.positionToFragment.put(0, new ContestInfoUsersFragment());
         this.positionToFragment.put(1, new ContestInfoMatchesFragment());
-        this.positionToFragment.put(2, new ContestInfoProofFragment());
+        this.positionToFragment.put(2, new ContestInfoProofsFragment());
     }
 
     @NonNull
