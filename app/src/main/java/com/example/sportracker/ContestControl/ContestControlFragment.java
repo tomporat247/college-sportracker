@@ -13,6 +13,7 @@ import android.widget.PopupMenu;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +30,6 @@ import java.util.HashMap;
 public class ContestControlFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
     private ContestControlViewModel viewModel;
     private View root;
-    private MaterialButton addMatchButton;
     private HashMap<Team, UserTeamListAdapter> teamToAdapter;
     private HashMap<Team, Integer> teamToViewId;
     private HashMap<Integer, Team> viewIdToTeam;
@@ -41,7 +41,6 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
                 new ViewModelProvider(this).get(ContestControlViewModel.class);
         this.viewModel.setUsers(new ArrayList<>(Arrays.asList(ContestControlFragmentArgs.fromBundle(getArguments()).getUsers())));
         this.root = inflater.inflate(R.layout.fragment_contest_control, container, false);
-        this.addMatchButton = this.root.findViewById(R.id.newMatchButton);
 
         this.initializeMaps();
         this.setupTeamLists();
@@ -87,7 +86,7 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
 
         this.viewModel.getTeamToUsers().observe(getViewLifecycleOwner(), teamToUsers -> {
             teamToUsers.keySet().forEach(team -> this.teamToAdapter.get(team).setUsers(teamToUsers.get(team)));
-            this.addMatchButton.setEnabled(teamToUsers.get(Team.A).size() > 0 && teamToUsers.get(Team.B).size() > 0);
+            this.root.findViewById(R.id.newMatchButton).setEnabled(teamToUsers.get(Team.A).size() > 0 && teamToUsers.get(Team.B).size() > 0);
         });
     }
 
@@ -109,6 +108,10 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
             popup.inflate(R.menu.popup_menu_pick_team);
             popup.show();
         });
+
+        this.root.findViewById(R.id.moreInfoButton).setOnClickListener(v ->
+                Navigation.findNavController(this.root).navigate(
+                        ContestControlFragmentDirections.actionContestControlToContestInfo()));
     }
 
     private void listenToUserDragDrop(View target) {

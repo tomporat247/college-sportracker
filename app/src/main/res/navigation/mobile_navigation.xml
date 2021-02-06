@@ -45,5 +45,13 @@
         <argument
             android:name="users"
             app:argType="com.example.sportracker.Models.User[]" />
+        <action
+            android:id="@+id/action_contestControl_to_contestInfo"
+            app:destination="@id/contestInfo" />
     </fragment>
+    <fragment
+        android:id="@+id/contestInfo"
+        android:name="com.example.sportracker.ContestInfo.ContestInfoFragment"
+        android:label="@string/contest_info_title"
+        tools:layout="@layout/fragment_contest_info" />
 </navigation>

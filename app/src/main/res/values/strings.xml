@@ -24,4 +24,5 @@
     <string name="fragment_enter_users_title">Enter Users</string>
     <string name="team_a_option">Team A</string>
     <string name="team_b_option">Team B</string>
+    <string name="contest_info_title">Contest Info</string>
 </resources>
