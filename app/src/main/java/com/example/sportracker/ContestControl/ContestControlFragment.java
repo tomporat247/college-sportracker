@@ -1,12 +1,15 @@
 package com.example.sportracker.ContestControl;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class ContestControlFragment extends Fragment {
+public class ContestControlFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
     private ContestControlViewModel viewModel;
     private View root;
     private MaterialButton addMatchButton;
@@ -45,6 +48,23 @@ public class ContestControlFragment extends Fragment {
         this.listenToActionClicks();
 
         return root;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.teamAOption:
+                this.viewModel.addMatch(Team.A);
+                Snackbar.make(this.root, "Match Added", Snackbar.LENGTH_LONG).show();
+                return true;
+            case R.id.teamBOption:
+                this.viewModel.addMatch(Team.B);
+                Snackbar.make(this.root, "Match Added", Snackbar.LENGTH_LONG).show();
+                return true;
+            default:
+                return false;
+        }
     }
 
     private void initializeMaps() {
@@ -84,9 +104,10 @@ public class ContestControlFragment extends Fragment {
 
     private void listenToActionClicks() {
         this.root.findViewById(R.id.newMatchButton).setOnClickListener(v -> {
-            // TODO: Show popup to pick winning team
-            this.viewModel.addMatch(Team.A);
-            Snackbar.make(this.root, "Match Added", Snackbar.LENGTH_LONG).show();
+            PopupMenu popup = new PopupMenu(getContext(), v);
+            popup.setOnMenuItemClickListener(ContestControlFragment.this);
+            popup.inflate(R.menu.popup_menu_pick_team);
+            popup.show();
         });
     }
 
