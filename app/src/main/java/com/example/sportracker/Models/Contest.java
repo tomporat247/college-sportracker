@@ -7,11 +7,13 @@ public class Contest {
     private List<User> users;
     private String name;
     private List<Match> matches;
+    private List<Proof> proofs;
 
-    public Contest(String name, List<User> users, List<Match> matches) {
+    public Contest(String name, List<User> users, List<Match> matches, List<Proof> proofs) {
         this.name = name;
         this.users = users;
         this.matches = matches;
+        this.proofs = proofs;
     }
 
     public List<Match> getMatches() {
@@ -36,6 +38,14 @@ public class Contest {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Proof> getProofs() {
+        return proofs;
+    }
+
+    public void setProofs(List<Proof> proofs) {
+        this.proofs = proofs;
     }
 
     public void addMatch(HashMap<Team, List<String>> teamToUserIds, Team winningTeam) {
