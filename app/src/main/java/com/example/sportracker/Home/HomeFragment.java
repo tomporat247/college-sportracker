@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sportracker.R;
+import com.example.sportracker.Utils.RecyclerViewUtils;
 
 public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
@@ -33,12 +34,7 @@ public class HomeFragment extends Fragment {
 
     private void setupContestList(View root) {
         final RecyclerView recyclerView = root.findViewById(R.id.contests_recycler_view);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                layoutManager.getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setAdapter(contestListAdapter);
-        recyclerView.setLayoutManager(layoutManager);
+        RecyclerViewUtils.setupRecyclerView(recyclerView, requireContext(), this.contestListAdapter);
     }
 
     private void listenToUserActions(View root) {

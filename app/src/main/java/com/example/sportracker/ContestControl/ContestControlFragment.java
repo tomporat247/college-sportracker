@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sportracker.Models.Team;
 import com.example.sportracker.R;
+import com.example.sportracker.Utils.RecyclerViewUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -91,12 +92,7 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
 
     private void setupTeamList(Team team) {
         final RecyclerView recyclerView = this.root.findViewById(this.teamToViewId.get(team));
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                layoutManager.getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setAdapter(this.teamToAdapter.get(team));
-        recyclerView.setLayoutManager(layoutManager);
+        RecyclerViewUtils.setupRecyclerView(recyclerView, requireContext(), this.teamToAdapter.get(team));
         this.listenToUserDragDrop((View) recyclerView.getParent());
     }
 

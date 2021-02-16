@@ -19,6 +19,7 @@ import com.example.sportracker.R;
 import com.example.sportracker.Utils.DrawableClickListener;
 import com.example.sportracker.Utils.EditTextWithDrawable;
 import com.example.sportracker.Utils.Keyboard;
+import com.example.sportracker.Utils.RecyclerViewUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -44,12 +45,7 @@ public class EnterContestPlayersFragment extends Fragment {
 
     private void setupUserList() {
         final RecyclerView recyclerView = this.root.findViewById(R.id.userRecyclerView);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                layoutManager.getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setAdapter(userListAdapter);
-        recyclerView.setLayoutManager(layoutManager);
+        RecyclerViewUtils.setupRecyclerView(recyclerView, requireContext(), this.userListAdapter);
 
         this.viewModel.getUsers().observe(getViewLifecycleOwner(), users -> {
             this.userListAdapter.setUsers(users);
