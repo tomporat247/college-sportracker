@@ -23,6 +23,7 @@ public class ContestControlViewModel extends ViewModel {
     }
 
     public void setUsers(List<User> users) {
+        // TODO: Remove
         ArrayList<Proof> tmpProofs = new ArrayList<>();
         tmpProofs.add(new Proof("https://www.gannett-cdn.com/media/USATODAY/USATODAY/2013/05/13/05-13-2013-dwyane-wade-3_4.jpg", new Date()));
         tmpProofs.add(new Proof("https://arc-anglerfish-arc2-prod-pmn.s3.amazonaws.com/public/QJGP36X3ANEQ7EARDLBRBHIDII.jpg", new Date()));
