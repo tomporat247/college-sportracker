@@ -29,6 +29,9 @@ public class ContestInfoProofsFragment extends Fragment {
 
     private void setupProofList() {
         RecyclerViewUtils.setupRecyclerView(this.root.findViewById(R.id.proofRecyclerView), requireContext(), adapter);
-        this.viewModel.getProofs().observe(getViewLifecycleOwner(), this.adapter::setProofs);
+        this.viewModel.getProofs().observe(getViewLifecycleOwner(), proofs -> {
+            this.adapter.setProofs(proofs);
+            this.root.findViewById(R.id.noProofsText).setVisibility(proofs.size() == 0 ? View.VISIBLE : View.GONE);
+        });
     }
 }
