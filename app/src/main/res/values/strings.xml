@@ -26,4 +26,6 @@
     <string name="team_b_option">Team B</string>
     <string name="contest_info_title">Contest Info</string>
     <string name="no_proofs_yet">no proofs yet</string>
+    <string name="match_info_winners_title">Winners</string>
+    <string name="match_info_losers_title">Losers</string>
 </resources>

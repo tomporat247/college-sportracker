@@ -13,4 +13,6 @@
     <color name="teamAColumnHeader">#ffffff</color>
     <color name="teamBBackground">#212129</color>
     <color name="teamBColumnHeader">#ffffff</color>
+    <color name="app_grey">#FF7D7D7D</color>
+    <color name="table_divider">#2196F3</color>
 </resources>
