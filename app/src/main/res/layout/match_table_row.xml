@@ -5,27 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:divider="@color/app_grey"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
     android:showDividers="middle">
 
-    <TextView
-        android:id="@+id/winnersText"
+    <LinearLayout
+        android:id="@+id/winners"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.45"
-        android:gravity="left"
-        android:padding="8sp"
-        android:text="Tom" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/losersText"
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/losers"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.45"
-        android:gravity="left"
-        android:padding="8sp"
-        android:text="Lilach" />
+        android:orientation="vertical">
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/removeMatch"

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -80,38 +79,16 @@
                 android:stretchColumns="1"
                 tools:ignore="UselessParent">
 
-                <include
-                    layout="@layout/match_date_divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-
-                <include
-                    layout="@layout/match_table_row"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <include
-                    layout="@layout/match_date_divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-
-                <include
-                    layout="@layout/match_table_row"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
             </TableLayout>
         </LinearLayout>
 
     </ScrollView>
 
     <TextView
+        android:id="@+id/matchCount"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingLeft="8sp"
-        android:text="Match count: 3" />
+        android:paddingLeft="8sp" />
 
 </LinearLayout>
