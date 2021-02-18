@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:divider="@color/app_grey"
+    android:showDividers="middle">
+
+    <ImageView
+        android:paddingTop="8sp"
+        android:paddingBottom="8sp"
+        android:id="@+id/userImageInUserTable"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2" />
+
+    <TextView
+        android:paddingTop="8sp"
+        android:paddingBottom="8sp"
+        android:id="@+id/userNameInUserTable"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"
+        android:paddingLeft="8sp" />
+
+    <TextView
+        android:paddingTop="8sp"
+        android:paddingBottom="8sp"
+        android:id="@+id/userWins"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.13"
+        android:gravity="center" />
+
+    <TextView
+        android:paddingTop="8sp"
+        android:paddingBottom="8sp"
+        android:id="@+id/userLoses"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.13"
+        android:gravity="center" />
+
+    <TextView
+        android:paddingTop="8sp"
+        android:paddingBottom="8sp"
+        android:id="@+id/userWinLossRatio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.13"
+        android:gravity="center" />
+
+</TableRow>

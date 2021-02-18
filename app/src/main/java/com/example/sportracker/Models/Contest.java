@@ -2,6 +2,7 @@ package com.example.sportracker.Models;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Contest {
     private List<User> users;
@@ -26,6 +27,25 @@ public class Contest {
 
     public List<User> getUsers() {
         return users;
+    }
+
+    public Map<String, ContestUserDetails> getIdToUserDetails() {
+        HashMap<String, ContestUserDetails> idToUserDetails = new HashMap<>();
+
+        for (User user : this.users) {
+            idToUserDetails.put(user.getId(), new ContestUserDetails(0, 0));
+        }
+
+        for (Match match : this.matches) {
+            for (String winnerId : match.getWinningTeamUserIds()) {
+                idToUserDetails.get(winnerId).incrementWinAmount();
+            }
+            for (String loserId : match.getLosingTeamUserIds()) {
+                idToUserDetails.get(loserId).incrementLossAmount();
+            }
+        }
+
+        return idToUserDetails;
     }
 
     public void setUsers(List<User> users) {
