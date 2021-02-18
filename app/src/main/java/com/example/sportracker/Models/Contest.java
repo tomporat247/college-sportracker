@@ -71,7 +71,7 @@ public class Contest {
     public void addMatch(HashMap<Team, List<String>> teamToUserIds, Team winningTeam) {
         List<String> winningTeamUserIds = teamToUserIds.get(winningTeam);
         List<String> losingTeamUserIds = teamToUserIds.get(winningTeam == Team.A ? Team.B : Team.A);
-        this.matches.add(new Match(winningTeamUserIds, losingTeamUserIds));
+        this.matches.add(0, new Match(winningTeamUserIds, losingTeamUserIds));
     }
 
     public void removeMatch(String matchId) {
