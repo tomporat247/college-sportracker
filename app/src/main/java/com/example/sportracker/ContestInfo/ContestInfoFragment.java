@@ -25,7 +25,7 @@ public class ContestInfoFragment extends Fragment {
         this.tabPositionToText = new HashMap<>();
         this.tabPositionToText.put(0, "Users");
         this.tabPositionToText.put(1, "Matches");
-        this.tabPositionToText.put(2, "Proof");
+        this.tabPositionToText.put(2, "Proofs");
 
         this.setupViewPager();
 
