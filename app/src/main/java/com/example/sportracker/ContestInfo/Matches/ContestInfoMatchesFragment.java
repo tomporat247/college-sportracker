@@ -45,7 +45,7 @@ public class ContestInfoMatchesFragment extends Fragment {
         TextView matchCountTextView = this.root.findViewById(R.id.matchCount);
         this.viewModel.getMatches().observe(getViewLifecycleOwner(), matches -> {
             tableLayout.removeAllViews();
-            matchCountTextView.setText("Match count: " + matches.size());
+            matchCountTextView.setText(String.format("Match count: %d", matches.size()));
 
             Map<String, List<Match>> dateToMatches = getDateToMatches(matches);
 
@@ -88,15 +88,17 @@ public class ContestInfoMatchesFragment extends Fragment {
 
         for (Map.Entry<LinearLayout, List<User>> entry : layoutToUsers.entrySet()) {
             for (User user : entry.getValue()) {
-                entry.getKey().addView(this.createUserInMatchRow(user, entry.getKey(), match.getId()));
+                entry.getKey().addView(this.createUserInMatchRow(user, entry.getKey()));
             }
         }
+
+        // TODO: Removing matches work - as of now they are recreated in ContestControlViewModel
+        matchTableRow.findViewById(R.id.removeMatch).setOnClickListener(v -> this.viewModel.removeMatch(match.getId()));
 
         return matchTableRow;
     }
 
-    private View createUserInMatchRow(User user, ViewGroup container, String matchId) {
-        // TODO: Listen to remove
+    private View createUserInMatchRow(User user, ViewGroup container) {
         View userInMatchRow = getLayoutInflater().inflate(R.layout.user_in_match_row, container, false);
         Picasso.get().load(user.getPhotoUrl()).into((ImageView) userInMatchRow.findViewById(R.id.userInMatchImage));
         ((TextView) userInMatchRow.findViewById(R.id.userInMatchName)).setText(user.getName());

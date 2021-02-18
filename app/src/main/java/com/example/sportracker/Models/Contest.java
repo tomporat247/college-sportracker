@@ -53,4 +53,8 @@ public class Contest {
         List<String> losingTeamUserIds = teamToUserIds.get(winningTeam == Team.A ? Team.B : Team.A);
         this.matches.add(new Match(winningTeamUserIds, losingTeamUserIds));
     }
+
+    public void removeMatch(String matchId) {
+        this.matches.removeIf(match -> match.getId().equals(matchId));
+    }
 }

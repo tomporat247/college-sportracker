@@ -17,6 +17,10 @@ public class ContestInfoMatchesViewModel extends ViewModel {
         return Transformations.map(ContestService.getInstance().getContest(), Contest::getMatches);
     }
 
+    void removeMatch(String matchId) {
+        ContestService.getInstance().removeMatch(matchId);
+    }
+
     private User getUserById(String id) {
         return ContestService.getInstance().getContest().getValue().getUsers().stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
     }

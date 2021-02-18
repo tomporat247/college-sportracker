@@ -60,6 +60,12 @@ public class ContestService {
         this.setContest(currentContest);
     }
 
+    public void removeMatch(String matchId) {
+        Contest currentContest = this.contest.getValue();
+        currentContest.removeMatch(matchId);
+        this.setContest(currentContest);
+    }
+
     public void swapUserTeam(String userId, Team newTeam) {
         HashMap<Team, List<String>> teamToUsersValue = this.teamToUserIds.getValue();
         User user = this.contest.getValue().getUsers().stream().filter(currentUser -> currentUser.getId().equals(userId)).findFirst().orElse(null);
