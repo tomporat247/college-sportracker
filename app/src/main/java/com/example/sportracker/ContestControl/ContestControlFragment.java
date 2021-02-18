@@ -55,11 +55,11 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
         switch (item.getItemId()) {
             case R.id.teamAOption:
                 this.viewModel.addMatch(Team.A);
-                Snackbar.make(this.root, "Match Added", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(this.root, "Match Added", 500).show();
                 return true;
             case R.id.teamBOption:
                 this.viewModel.addMatch(Team.B);
-                Snackbar.make(this.root, "Match Added", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(this.root, "Match Added", 500).show();
                 return true;
             default:
                 return false;

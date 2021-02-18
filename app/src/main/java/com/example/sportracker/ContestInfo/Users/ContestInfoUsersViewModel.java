@@ -23,7 +23,7 @@ public class ContestInfoUsersViewModel extends ViewModel {
             Map<String, ContestUserDetails> idToUserDetails = this.getIdToUserDetails();
             List<User> users = new ArrayList<>(contest.getUsers());
             users.sort((User first, User second) ->
-                    idToUserDetails.get(first.getId()).getWinLossRatio() >= idToUserDetails.get(second.getId()).getWinLossRatio() ? 1 : -1);
+                    idToUserDetails.get(first.getId()).getWinLossRatio() <= idToUserDetails.get(second.getId()).getWinLossRatio() ? 1 : -1);
             return users;
         });
     }
