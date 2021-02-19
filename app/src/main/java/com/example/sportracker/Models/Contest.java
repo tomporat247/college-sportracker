@@ -3,18 +3,25 @@ package com.example.sportracker.Models;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class Contest {
+    private final String id;
     private List<User> users;
     private String name;
     private List<Match> matches;
     private List<Proof> proofs;
 
     public Contest(String name, List<User> users, List<Match> matches, List<Proof> proofs) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.users = users;
         this.matches = matches;
         this.proofs = proofs;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public List<Match> getMatches() {

@@ -6,8 +6,9 @@ import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.text.format.DateFormat;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -23,10 +24,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sportracker.Models.Team;
 import com.example.sportracker.R;
 import com.example.sportracker.Utils.RecyclerViewUtils;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 
 public class ContestControlFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
@@ -67,6 +76,13 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
                 return true;
             default:
                 return false;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            this.uploadPhotoToStorageBucket((Bitmap) data.getExtras().get("data"));
         }
     }
 
@@ -149,11 +165,34 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            // TODO: Upload photo to firestore storage and add the given path to the firestore document
-        }
+    private void uploadPhotoToStorageBucket(Bitmap photo) {
+        Date now = new Date();
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference()
+                .child("proofs")
+                .child(this.viewModel.getContestId())
+                .child(DateFormat.format("dd-MM-yyyy HH:mm:ss", now) + ".jpg");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = storageRef.putBytes(data);
+        uploadTask.addOnFailureListener(exception -> {
+            // TODO: Handle unsuccessful uploads
+        }).addOnSuccessListener(taskSnapshot ->
+                uploadTask.continueWithTask((Continuation<UploadTask.TaskSnapshot, Task<Uri>>) task -> {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                        // TODO: Handle unsuccessful uploads
+                    }
+
+                    return storageRef.getDownloadUrl();
+                }).addOnCompleteListener((OnCompleteListener<Uri>) task -> {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        viewModel.addProofPhotoUrl(downloadUri.toString(), now);
+                    } else {
+                        // TODO: Handle unsuccessful uploads
+                    }
+                }));
     }
 }

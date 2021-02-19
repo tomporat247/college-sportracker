@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.example.sportracker.Models.Contest;
+import com.example.sportracker.Models.Proof;
 import com.example.sportracker.Models.Team;
 import com.example.sportracker.Models.User;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +54,12 @@ public class ContestService {
                         Map.Entry::getKey,
                         entry -> entry.getValue().stream().map(userIdToUser::get).collect(Collectors.toList())
                 )));
+    }
+
+    public void addProofPhotoUrl(String url, Date date) {
+        Contest currentContest = this.contest.getValue();
+        currentContest.getProofs().add(new Proof(url, date));
+        this.setContest(currentContest);
     }
 
     public void addMatch(Team winningTeam) {
