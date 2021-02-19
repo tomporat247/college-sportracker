@@ -18,7 +18,7 @@ public class HomeViewModel extends ViewModel {
         this.contests = new MutableLiveData<>();
         final ArrayList<User> tmpUsers = new ArrayList<>();
         final ArrayList<Contest> tmpContests = new ArrayList<>();
-        tmpUsers.add(new User("1", "abc@gmail.com", "abc", "photo"));
+        tmpUsers.add(new User("1", "abc@gmail.com", "abc", "photo", null));
         tmpContests.add(new Contest("ContestA", tmpUsers, new ArrayList<>(), new ArrayList<>()));
         tmpContests.add(new Contest("ContestB", tmpUsers, new ArrayList<>(), new ArrayList<>()));
         tmpContests.add(new Contest("Lilach lilch lilchush", tmpUsers, new ArrayList<>(), new ArrayList<>()));
