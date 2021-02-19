@@ -1,135 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ContestControl.ContestControlFragment">
 
     <LinearLayout
+        android:id="@+id/contestInfoContainer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".ContestControl.ContestControlFragment">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/outColumnBackground"
-            android:orientation="vertical"
-            tools:ignore="NestedWeights">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textStyle="italic"
-                android:textColor="@color/outColumnHeaderText"
-                android:padding="10sp"
-                android:text="@string/outColumnHeaderText" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/outColumnBackground"
+                android:orientation="vertical"
+                tools:ignore="NestedWeights">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/teamOutRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10sp"
+                    android:text="@string/outColumnHeaderText"
+                    android:textAlignment="center"
+                    android:textColor="@color/outColumnHeaderText"
+                    android:textStyle="italic" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/teamOutRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/teamABackground"
+                android:orientation="vertical"
+                tools:ignore="NestedWeights">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10sp"
+                    android:text="@string/teamAColumnHeader"
+                    android:textAlignment="center"
+                    android:textColor="@color/teamAColumnHeader"
+                    android:textStyle="italic" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/teamARecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/teamBBackground"
+                android:orientation="vertical"
+                tools:ignore="NestedWeights">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10sp"
+                    android:text="@string/teamBColumnHeader"
+                    android:textAlignment="center"
+                    android:textColor="@color/teamBColumnHeader"
+                    android:textStyle="italic" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/teamBRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/teamABackground"
-            android:orientation="vertical"
-            tools:ignore="NestedWeights">
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/moreInfoButton"
+                style="@style/Widget.MaterialComponents.FloatingActionButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textStyle="italic"
-                android:textColor="@color/teamAColumnHeader"
-                android:padding="10sp"
-                android:text="@string/teamAColumnHeader" />
+                android:layout_margin="10sp"
+                android:layout_weight="1"
+                android:backgroundTint="#616161"
+                android:text="@string/infoButton"
+                app:icon="@drawable/ic_baseline_info_24"
+                app:iconGravity="textStart"
+                tools:ignore="NestedWeights" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/teamARecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/teamBBackground"
-            android:orientation="vertical"
-            tools:ignore="NestedWeights">
-
-            <TextView
-                android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/newMatchButton"
+                style="@style/Widget.MaterialComponents.FloatingActionButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textStyle="italic"
-                android:textColor="@color/teamBColumnHeader"
-                android:padding="10sp"
-                android:text="@string/teamBColumnHeader" />
+                android:layout_margin="10sp"
+                android:layout_weight="1"
+                android:backgroundTint="#388e3d"
+                android:text="@string/addMatchButton"
+                app:icon="@drawable/ic_baseline_gavel_24"
+                app:iconGravity="textStart"
+                tools:ignore="NestedWeights" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/teamBRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveButton"
+                style="@style/Widget.MaterialComponents.FloatingActionButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10sp"
+                android:layout_weight="1"
+                android:backgroundTint="#02a9f5"
+                android:text="@string/saveContestButton"
+                app:icon="@drawable/ic_baseline_save_alt_24"
+                app:iconGravity="textStart"
+                tools:ignore="NestedWeights" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/moreInfoButton"
-            style="@style/Widget.MaterialComponents.FloatingActionButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10sp"
-            android:layout_weight="1"
-            android:backgroundTint="#616161"
-            android:text="@string/infoButton"
-            app:icon="@drawable/ic_baseline_info_24"
-            app:iconGravity="textStart"
-            tools:ignore="NestedWeights" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/newMatchButton"
-            style="@style/Widget.MaterialComponents.FloatingActionButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10sp"
-            android:layout_weight="1"
-            android:backgroundTint="#388e3d"
-            android:text="@string/addMatchButton"
-            app:icon="@drawable/ic_baseline_gavel_24"
-            app:iconGravity="textStart"
-            tools:ignore="NestedWeights" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/saveButton"
-            style="@style/Widget.MaterialComponents.FloatingActionButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10sp"
-            android:layout_weight="1"
-            android:backgroundTint="#02a9f5"
-            android:text="@string/saveContestButton"
-            app:icon="@drawable/ic_baseline_save_alt_24"
-            app:iconGravity="textStart"
-            tools:ignore="NestedWeights" />
-    </LinearLayout>
-
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/savingLoader"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -166,6 +166,7 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
     }
 
     private void uploadPhotoToStorageBucket(Bitmap photo) {
+        this.setLoadingBarVisibility(true);
         Date now = new Date();
         StorageReference storageRef = FirebaseStorage.getInstance().getReference()
                 .child("proofs")
@@ -177,10 +178,12 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
 
         UploadTask uploadTask = storageRef.putBytes(data);
         uploadTask.addOnFailureListener(exception -> {
+            this.setLoadingBarVisibility(false);
             // TODO: Handle unsuccessful uploads
         }).addOnSuccessListener(taskSnapshot ->
                 uploadTask.continueWithTask((Continuation<UploadTask.TaskSnapshot, Task<Uri>>) task -> {
                     if (!task.isSuccessful()) {
+                        this.setLoadingBarVisibility(false);
                         throw task.getException();
                         // TODO: Handle unsuccessful uploads
                     }
@@ -190,9 +193,17 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         viewModel.addProofPhotoUrl(downloadUri.toString(), now);
+                        this.setLoadingBarVisibility(false);
                     } else {
+                        this.setLoadingBarVisibility(false);
                         // TODO: Handle unsuccessful uploads
                     }
                 }));
+    }
+
+    private void setLoadingBarVisibility(boolean isVisible) {
+        this.root.findViewById(R.id.savingLoader).setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        // TODO: Block going back or proceeding to a different fragment
+        this.root.findViewById(R.id.contestInfoContainer).setAlpha((float) (isVisible ? 0.4 : 1.0));
     }
 }
