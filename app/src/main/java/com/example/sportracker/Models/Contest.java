@@ -84,4 +84,8 @@ public class Contest {
     public void removeMatch(String matchId) {
         this.matches.removeIf(match -> match.getId().equals(matchId));
     }
+
+    public void addProof(Proof proof) {
+        this.getProofs().add(0, proof);
+    }
 }

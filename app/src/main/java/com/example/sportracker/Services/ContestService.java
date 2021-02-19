@@ -58,7 +58,7 @@ public class ContestService {
 
     public void addProofPhotoUrl(String url, Date date) {
         Contest currentContest = this.contest.getValue();
-        currentContest.getProofs().add(new Proof(url, date));
+        currentContest.addProof(new Proof(url, date));
         this.setContest(currentContest);
     }
 
