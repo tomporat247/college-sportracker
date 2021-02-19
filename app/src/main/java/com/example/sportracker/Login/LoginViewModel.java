@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class LoginViewModel extends ViewModel {
     public void upsertUserFireStoreDocument() {
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
-            firestore.collection("users").document(user.getUid()).set(getUserDataMap());
+            firestore.collection("users").document(user.getUid()).set(getUserDataMap(), SetOptions.merge());
         }
     }
 
