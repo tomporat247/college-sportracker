@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -45,7 +46,7 @@ public class ContestInfoMatchesFragment extends Fragment {
         TextView matchCountTextView = this.root.findViewById(R.id.matchCount);
         this.viewModel.getMatches().observe(getViewLifecycleOwner(), matches -> {
             tableLayout.removeAllViews();
-            matchCountTextView.setText(String.format("Match count: %d", matches.size()));
+            matchCountTextView.setText(String.format(Locale.US, "Match count: %d", matches.size()));
 
             Map<String, List<Match>> dateToMatches = getDateToMatches(matches);
 
@@ -92,7 +93,6 @@ public class ContestInfoMatchesFragment extends Fragment {
             }
         }
 
-        // TODO: Removing matches work - as of now they are recreated in ContestControlViewModel
         matchTableRow.findViewById(R.id.removeMatch).setOnClickListener(v -> this.viewModel.removeMatch(match.getId()));
 
         return matchTableRow;

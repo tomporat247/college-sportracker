@@ -85,6 +85,7 @@ public class EnterContestPlayersFragment extends Fragment {
 
     private void navigateToContestControl() {
         Keyboard.hideKeyboard(getActivity());
+        this.viewModel.createContest();
         Navigation.findNavController(this.root).navigate(
                 EnterContestPlayersFragmentDirections.actionEnterContestPlayersToContestControl(
                         this.viewModel.getUsers().getValue().toArray(new User[0])));
