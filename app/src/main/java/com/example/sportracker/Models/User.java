@@ -3,7 +3,12 @@ package com.example.sportracker.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class User implements Parcelable {
@@ -12,12 +17,14 @@ public class User implements Parcelable {
     private String name;
     private String photoUrl;
     private Date lastLoginDate;
+    private ArrayList<String> contestIds;
 
-    public User(String id, String email, String name, String photoUrl) {
+    public User(String id, String email, String name, String photoUrl, @Nullable ArrayList<String> contestIds) {
         this.setId(id);
         this.setEmail(email);
         this.setName(name);
         this.setPhotoUrl(photoUrl);
+        this.setContestIds(contestIds);
     }
 
     public User(String id, Map<String, Object> firestoreDocument) {
@@ -26,6 +33,7 @@ public class User implements Parcelable {
         this.setName((String) firestoreDocument.get("name"));
         this.setPhotoUrl((String) firestoreDocument.get("photoUrl"));
         this.setLastLoginDate(new Date((Long) firestoreDocument.get("lastLoginDate")));
+        this.setContestIds(new ArrayList<>(Arrays.asList((String[]) firestoreDocument.get("contestIds"))));
     }
 
     protected User(Parcel in) {
@@ -33,6 +41,7 @@ public class User implements Parcelable {
         email = in.readString();
         name = in.readString();
         photoUrl = in.readString();
+        contestIds = in.createStringArrayList();
     }
 
     @Override
@@ -41,6 +50,7 @@ public class User implements Parcelable {
         dest.writeString(email);
         dest.writeString(name);
         dest.writeString(photoUrl);
+        dest.writeStringList(contestIds);
     }
 
     @Override
@@ -98,5 +108,17 @@ public class User implements Parcelable {
 
     public void setLastLoginDate(Date lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
+    }
+
+    public List<String> getContestIds() {
+        return contestIds;
+    }
+
+    public void setContestIds(ArrayList<String> contestIds) {
+        if (contestIds == null) {
+            this.contestIds = new ArrayList<>();
+        } else {
+            this.contestIds = contestIds;
+        }
     }
 }
