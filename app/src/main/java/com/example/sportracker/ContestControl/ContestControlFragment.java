@@ -1,9 +1,13 @@
 package com.example.sportracker.ContestControl;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,8 +18,6 @@ import android.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sportracker.Models.Team;
@@ -33,6 +35,8 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
     private HashMap<Team, UserTeamListAdapter> teamToAdapter;
     private HashMap<Team, Integer> teamToViewId;
     private HashMap<Integer, Team> viewIdToTeam;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -107,6 +111,9 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
         this.root.findViewById(R.id.moreInfoButton).setOnClickListener(v ->
                 Navigation.findNavController(this.root).navigate(
                         ContestControlFragmentDirections.actionContestControlToContestInfo()));
+
+        this.root.findViewById(R.id.saveButton).setOnClickListener(v -> this.dispatchTakePictureIntent());
+
     }
 
     private void listenToUserDragDrop(View target) {
@@ -135,5 +142,20 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
                     return false;
             }
         });
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK)
+        {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            // TODO: Upload photo to firestore storage and add the given path to the firestore document
+        }
     }
 }
