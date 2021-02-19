@@ -150,10 +150,8 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK)
-        {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             // TODO: Upload photo to firestore storage and add the given path to the firestore document
         }
