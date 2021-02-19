@@ -167,38 +167,12 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
 
     private void uploadPhotoToStorageBucket(Bitmap photo) {
         this.setLoadingBarVisibility(true);
-        Date now = new Date();
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference()
-                .child("proofs")
-                .child(this.viewModel.getContestId())
-                .child(DateFormat.format("dd-MM-yyyy HH:mm:ss", now) + ".jpg");
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        photo.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] data = baos.toByteArray();
-
-        UploadTask uploadTask = storageRef.putBytes(data);
-        uploadTask.addOnFailureListener(exception -> {
+        this.viewModel.uploadPhotoToStorageBucket(photo).whenComplete((uri, exception) -> {
             this.setLoadingBarVisibility(false);
-            // TODO: Handle unsuccessful uploads
-        }).addOnSuccessListener(taskSnapshot ->
-                uploadTask.continueWithTask((Continuation<UploadTask.TaskSnapshot, Task<Uri>>) task -> {
-                    if (!task.isSuccessful()) {
-                        this.setLoadingBarVisibility(false);
-                        throw task.getException();
-                        // TODO: Handle unsuccessful uploads
-                    }
-
-                    return storageRef.getDownloadUrl();
-                }).addOnCompleteListener((OnCompleteListener<Uri>) task -> {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        viewModel.addProofPhotoUrl(downloadUri.toString(), now);
-                        this.setLoadingBarVisibility(false);
-                    } else {
-                        this.setLoadingBarVisibility(false);
-                        // TODO: Handle unsuccessful uploads
-                    }
-                }));
+            if (exception != null) {
+                Snackbar.make(this.root, exception.getMessage(), Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void setLoadingBarVisibility(boolean isVisible) {
