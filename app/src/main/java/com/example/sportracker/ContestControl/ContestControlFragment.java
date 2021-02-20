@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sportracker.Dialogs.EnterContestName.EnterContestNameDialog;
 import com.example.sportracker.Models.Team;
 import com.example.sportracker.R;
 import com.example.sportracker.Utils.RecyclerViewUtils;
@@ -27,6 +28,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.concurrent.CompletableFuture;
 
 public class ContestControlFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
     private ContestControlViewModel viewModel;
@@ -159,8 +161,16 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
     }
 
     private void requestContestName() {
-        this.viewModel.setContestName("Baluba");
-        this.onSave();
+        CompletableFuture<String> completableFuture = new CompletableFuture<>();
+        EnterContestNameDialog dialog = new EnterContestNameDialog(completableFuture);
+
+        completableFuture.whenComplete((contestName, exception) -> {
+            if (contestName != null) {
+                this.viewModel.setContestName(contestName);
+                this.onSave();
+            }
+        });
+        dialog.show(getChildFragmentManager(), "EnterContestDialog");
     }
 
     private void dispatchTakePictureIntent() {

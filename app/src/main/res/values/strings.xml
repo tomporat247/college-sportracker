@@ -28,4 +28,5 @@
     <string name="no_proofs_yet">no proofs yet</string>
     <string name="match_info_winners_title">Winners</string>
     <string name="match_info_losers_title">Losers</string>
+    <string name="enter_contest_name_hint">Enter Contest Name…</string>
 </resources>
