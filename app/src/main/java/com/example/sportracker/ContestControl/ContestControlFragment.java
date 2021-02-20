@@ -6,9 +6,7 @@ import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -24,18 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sportracker.Models.Team;
 import com.example.sportracker.R;
 import com.example.sportracker.Utils.RecyclerViewUtils;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 
 public class ContestControlFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
@@ -128,7 +118,7 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
                 Navigation.findNavController(this.root).navigate(
                         ContestControlFragmentDirections.actionContestControlToContestInfo()));
 
-        this.root.findViewById(R.id.saveButton).setOnClickListener(v -> this.dispatchTakePictureIntent());
+        this.root.findViewById(R.id.saveButton).setOnClickListener(v -> this.onSave());
 
     }
 
@@ -158,6 +148,19 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
                     return false;
             }
         });
+    }
+
+    private void onSave() {
+        if (this.viewModel.isContestNew()) {
+            this.requestContestName();
+        } else {
+            this.dispatchTakePictureIntent();
+        }
+    }
+
+    private void requestContestName() {
+        this.viewModel.setContestName("Baluba");
+        this.onSave();
     }
 
     private void dispatchTakePictureIntent() {

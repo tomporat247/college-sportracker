@@ -88,4 +88,8 @@ public class Contest {
     public void addProof(Proof proof) {
         this.getProofs().add(0, proof);
     }
+
+    public boolean isContestNew() {
+        return this.getName() == null;
+    }
 }

@@ -110,6 +110,6 @@ public class EnterContestPlayersViewModel extends ViewModel {
         c.add(Calendar.MONTH, 1);
         differentDateMatch.setDate(c.getTime());
         tmpMatches.add(differentDateMatch);
-        return new Contest("", users, tmpMatches, tmpProofs);
+        return new Contest(null, users, tmpMatches, tmpProofs);
     }
 }

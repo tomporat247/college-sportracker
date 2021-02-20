@@ -7,6 +7,7 @@ import android.text.format.DateFormat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.sportracker.Models.Proof;
 import com.example.sportracker.Models.Team;
 import com.example.sportracker.Models.User;
 import com.example.sportracker.Services.ContestService;
@@ -52,6 +53,14 @@ public class ContestControlViewModel extends ViewModel {
         ContestService.getInstance().addMatch(winningTeam);
     }
 
+    public boolean isContestNew() {
+        return ContestService.getInstance().getContest().getValue().isContestNew();
+    }
+
+    public void setContestName(String name) {
+        ContestService.getInstance().setContestName(name);
+    }
+
     public CompletableFuture<String> uploadPhotoToStorageBucket(Bitmap photo) {
         CompletableFuture<String> completableFuture = new CompletableFuture<>();
 
@@ -78,6 +87,8 @@ public class ContestControlViewModel extends ViewModel {
                             if (task.isSuccessful()) {
                                 String downloadUri = task.getResult().toString();
                                 this.addProofPhotoUrl(downloadUri, now);
+                                // TODO: When this is the first save - show a dialog and request a contest name
+                                // TODO: Save contest - adding the proof url should be part of the save method
                                 completableFuture.complete(downloadUri);
                             } else {
                                 completableFuture.completeExceptionally(new Exception("Could not upload image to storage bucket"));
@@ -89,6 +100,6 @@ public class ContestControlViewModel extends ViewModel {
     }
 
     private void addProofPhotoUrl(String url, Date date) {
-        ContestService.getInstance().addProofPhotoUrl(url, date);
+        ContestService.getInstance().addProofPhoto(new Proof(url, date));
     }
 }
