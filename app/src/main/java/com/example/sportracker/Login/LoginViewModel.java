@@ -20,8 +20,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class LoginViewModel extends ViewModel {
-    public FirebaseAuth auth = FirebaseAuth.getInstance();
-    public FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    private final FirebaseAuth auth = FirebaseAuth.getInstance();
+    private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
     public FirebaseUser getCurrentUser() {
         return auth.getCurrentUser();
