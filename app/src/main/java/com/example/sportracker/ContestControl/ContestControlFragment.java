@@ -75,6 +75,9 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             this.uploadPhotoToStorageBucket((Bitmap) data.getExtras().get("data"));
+            // TODO: Show loader until both are done
+            // TODO: Save only after photo is uploaded
+            this.viewModel.saveContest();
         }
     }
 

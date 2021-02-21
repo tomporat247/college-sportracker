@@ -8,9 +8,10 @@ import com.example.sportracker.Models.Contest;
 import com.example.sportracker.Models.Proof;
 import com.example.sportracker.Models.Team;
 import com.example.sportracker.Models.User;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 public class ContestService {
     private static final ContestService instance = new ContestService();
+    private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private final MutableLiveData<Contest> contest;
     private final MutableLiveData<HashMap<Team, List<String>>> teamToUserIds;
 
@@ -54,6 +56,13 @@ public class ContestService {
                         Map.Entry::getKey,
                         entry -> entry.getValue().stream().map(userIdToUser::get).collect(Collectors.toList())
                 )));
+    }
+
+    public void saveToFirestore() {
+        Contest contest = this.contest.getValue();
+        this.firestore.collection("contests").document(contest.getId()).set(contest.toDoc(), SetOptions.merge());
+        // TODO: Save to users doc
+        // TODO: or even better use array-contains (https://stackoverflow.com/questions/54987399/firestore-search-array-contains-for-multiple-values) - VERIFY THIS WORKS
     }
 
     public void setContestName(String name) {

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Contest {
     private final String id;
@@ -18,6 +19,18 @@ public class Contest {
         this.users = users;
         this.matches = matches;
         this.proofs = proofs;
+    }
+
+    public Map<String, Object> toDoc() {
+        Map<String, Object> contestMap = new HashMap<>();
+
+        contestMap.put("id", this.id);
+        contestMap.put("name", this.name);
+        contestMap.put("users", this.users.stream().map(User::getId).collect(Collectors.toList()));
+        contestMap.put("matches", this.matches.stream().map(Match::toDoc).collect(Collectors.toList()));
+        contestMap.put("proofs", this.proofs.stream().map(Proof::toDoc).collect(Collectors.toList()));
+
+        return contestMap;
     }
 
     public String getId() {

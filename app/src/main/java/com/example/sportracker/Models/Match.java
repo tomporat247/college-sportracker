@@ -1,7 +1,9 @@
 package com.example.sportracker.Models;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class Match {
@@ -16,6 +18,17 @@ public class Match {
         this.winningTeamUserIds = winningTeamUserIds;
         this.losingTeamUserIds = losingTeamUserIds;
         this.date = new Date();
+    }
+
+    public Map<String, Object> toDoc() {
+        Map<String, Object> matchMap = new HashMap<>();
+
+        matchMap.put("id", this.id);
+        matchMap.put("winningTeamUserIds", this.winningTeamUserIds);
+        matchMap.put("losingTeamUserIds", this.losingTeamUserIds);
+        matchMap.put("date", this.date.getTime());
+
+        return matchMap;
     }
 
     public String getId() {
