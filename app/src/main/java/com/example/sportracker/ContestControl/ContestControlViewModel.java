@@ -61,8 +61,8 @@ public class ContestControlViewModel extends ViewModel {
         ContestService.getInstance().setContestName(name);
     }
 
-    public void saveContest() {
-        ContestService.getInstance().saveToFirestore();
+    public CompletableFuture<Object> saveContest() {
+        return ContestService.getInstance().saveToFirestore();
     }
 
     public CompletableFuture<String> uploadPhotoToStorageBucket(Bitmap photo) {
@@ -91,8 +91,6 @@ public class ContestControlViewModel extends ViewModel {
                             if (task.isSuccessful()) {
                                 String downloadUri = task.getResult().toString();
                                 this.addProofPhotoUrl(downloadUri, now);
-                                // TODO: When this is the first save - show a dialog and request a contest name
-                                // TODO: Save contest - adding the proof url should be part of the save method
                                 completableFuture.complete(downloadUri);
                             } else {
                                 completableFuture.completeExceptionally(new Exception("Could not upload image to storage bucket"));

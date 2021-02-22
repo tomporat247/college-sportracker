@@ -8,6 +8,7 @@ import com.example.sportracker.Models.Contest;
 import com.example.sportracker.Models.Proof;
 import com.example.sportracker.Models.Team;
 import com.example.sportracker.Models.User;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -15,6 +16,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 public class ContestService {
@@ -58,9 +60,15 @@ public class ContestService {
                 )));
     }
 
-    public void saveToFirestore() {
+    public CompletableFuture<Object> saveToFirestore() {
+        CompletableFuture<Object> completableFuture = new CompletableFuture<>();
         Contest contest = this.contest.getValue();
-        this.firestore.collection("contests").document(contest.getId()).set(contest.toDoc(), SetOptions.merge());
+        Task<Void> writeTask = this.firestore.collection("contests").document(contest.getId()).set(contest.toDoc(), SetOptions.merge());
+
+        writeTask
+                .addOnSuccessListener(task -> completableFuture.complete("Done"))
+                .addOnFailureListener(completableFuture::completeExceptionally);
+        return completableFuture;
         // TODO: Save to users doc
         // TODO: or even better use array-contains (https://stackoverflow.com/questions/54987399/firestore-search-array-contains-for-multiple-values) - VERIFY THIS WORKS
     }

@@ -74,10 +74,22 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            this.uploadPhotoToStorageBucket((Bitmap) data.getExtras().get("data"));
-            // TODO: Show loader until both are done
-            // TODO: Save only after photo is uploaded
-            this.viewModel.saveContest();
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            this.setLoadingBarVisibility(true);
+            this.viewModel.uploadPhotoToStorageBucket(photo).whenComplete((uri, storageException) -> {
+                if (storageException != null) {
+                    Snackbar.make(this.root, storageException.getMessage(), Snackbar.LENGTH_LONG).show();
+                } else {
+                    this.viewModel.saveContest().whenComplete((a, firestoreException) -> {
+                        if (firestoreException != null) {
+                            Snackbar.make(this.root, "An error occurred during contest save", Snackbar.LENGTH_LONG).show();
+                        } else {
+                            this.setLoadingBarVisibility(false);
+                            Snackbar.make(this.root, "Contest saved", Snackbar.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            });
         }
     }
 
@@ -179,16 +191,6 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-    }
-
-    private void uploadPhotoToStorageBucket(Bitmap photo) {
-        this.setLoadingBarVisibility(true);
-        this.viewModel.uploadPhotoToStorageBucket(photo).whenComplete((uri, exception) -> {
-            this.setLoadingBarVisibility(false);
-            if (exception != null) {
-                Snackbar.make(this.root, exception.getMessage(), Snackbar.LENGTH_LONG).show();
-            }
-        });
     }
 
     private void setLoadingBarVisibility(boolean isVisible) {
