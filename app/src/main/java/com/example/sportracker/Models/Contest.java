@@ -21,6 +21,14 @@ public class Contest {
         this.proofs = proofs;
     }
 
+    public Contest(Map<String, Object> firestoreDocument) {
+        this.id = (String) firestoreDocument.get("id");
+        this.name = (String) firestoreDocument.get("name");
+        this.users = null;
+        this.matches = ((List<Map<String, Object>>) firestoreDocument.get("matches")).stream().map(Match::new).collect(Collectors.toList());
+        this.proofs = ((List<Map<String, Object>>) firestoreDocument.get("proofs")).stream().map(Proof::new).collect(Collectors.toList());
+    }
+
     public Map<String, Object> toDoc() {
         Map<String, Object> contestMap = new HashMap<>();
 

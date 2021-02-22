@@ -13,6 +13,11 @@ public class Proof {
         this.date = date;
     }
 
+    public Proof(Map<String, Object> firestoreDocument) {
+        this.photoUrl = (String) firestoreDocument.get("photoUrl");
+        this.date = new Date((Long) firestoreDocument.get("date"));
+    }
+
     public Map<String, Object> toDoc() {
         Map<String, Object> proofMap = new HashMap<>();
 

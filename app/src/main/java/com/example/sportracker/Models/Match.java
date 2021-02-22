@@ -20,6 +20,13 @@ public class Match {
         this.date = new Date();
     }
 
+    public Match(Map<String, Object> firestoreDocument) {
+        this.id = (String) firestoreDocument.get("id");
+        this.winningTeamUserIds = (List<String>) firestoreDocument.get("winningTeamUserIds");
+        this.losingTeamUserIds = (List<String>) firestoreDocument.get("losingTeamUserIds");
+        this.date = new Date((Long) firestoreDocument.get("date"));
+    }
+
     public Map<String, Object> toDoc() {
         Map<String, Object> matchMap = new HashMap<>();
 

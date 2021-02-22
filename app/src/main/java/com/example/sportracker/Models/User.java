@@ -36,6 +36,15 @@ public class User implements Parcelable {
         this.setContestIds(firestoreDocument.containsKey("contestIds") ? new ArrayList<>(Arrays.asList((String[]) firestoreDocument.get("contestIds"))) : null);
     }
 
+    public User(Map<String, Object> firestoreDocument) {
+        this.setId((String) firestoreDocument.get("id"));
+        this.setEmail((String) firestoreDocument.get("email"));
+        this.setName((String) firestoreDocument.get("name"));
+        this.setPhotoUrl((String) firestoreDocument.get("photoUrl"));
+        this.setLastLoginDate(new Date((Long) firestoreDocument.get("lastLoginDate")));
+        this.setContestIds(firestoreDocument.containsKey("contestIds") ? new ArrayList<>(Arrays.asList((String[]) firestoreDocument.get("contestIds"))) : null);
+    }
+
     protected User(Parcel in) {
         id = in.readString();
         email = in.readString();
