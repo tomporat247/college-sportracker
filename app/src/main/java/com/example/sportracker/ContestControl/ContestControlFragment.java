@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sportracker.Dialogs.EnterContestName.EnterContestNameDialog;
 import com.example.sportracker.Models.Team;
+import com.example.sportracker.Models.User;
 import com.example.sportracker.R;
 import com.example.sportracker.Utils.RecyclerViewUtils;
 import com.google.android.material.snackbar.Snackbar;
@@ -44,9 +45,9 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
                              Bundle savedInstanceState) {
         this.viewModel =
                 new ViewModelProvider(this).get(ContestControlViewModel.class);
-        this.viewModel.setUsers(new ArrayList<>(Arrays.asList(ContestControlFragmentArgs.fromBundle(getArguments()).getUsers())));
         this.root = inflater.inflate(R.layout.fragment_contest_control, container, false);
 
+        this.handleIncomingArguments();
         this.initializeMaps();
         this.setupTeamLists();
         this.listenToActionClicks();
@@ -91,6 +92,12 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
                 }
             });
         }
+    }
+
+    private void handleIncomingArguments() {
+        ContestControlFragmentArgs args = ContestControlFragmentArgs.fromBundle(getArguments());
+        User[] users = args.getUsers();
+        this.viewModel.setUsers(users != null ? new ArrayList<>(Arrays.asList(users)): null);
     }
 
     private void initializeMaps() {

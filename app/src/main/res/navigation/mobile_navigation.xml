@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_nav_home_to_enterContestPlayers"
             app:destination="@id/enterContestPlayers" />
+        <action
+            android:id="@+id/action_nav_home_to_contestControl"
+            app:destination="@id/contestControl" />
     </fragment>
 
     <fragment
@@ -44,7 +47,8 @@
         tools:layout="@layout/fragment_contest_control" >
         <argument
             android:name="users"
-            app:argType="com.example.sportracker.Models.User[]" />
+            app:argType="com.example.sportracker.Models.User[]"
+            app:nullable="true"/>
         <action
             android:id="@+id/action_contestControl_to_contestInfo"
             app:destination="@id/contestInfo" />

@@ -13,21 +13,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sportracker.R;
 import com.example.sportracker.Utils.RecyclerViewUtils;
+import com.google.android.material.snackbar.Snackbar;
 
 public class HomeFragment extends Fragment {
+    private View root;
     private HomeViewModel homeViewModel;
-    private final ContestListAdapter contestListAdapter = new ContestListAdapter();
+    private final ContestListAdapter contestListAdapter = new ContestListAdapter(this::onContestClick);
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        this.root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        this.setupContestList(root);
-        this.listenToUserActions(root);
+        this.setupContestList(this.root);
+        this.listenToUserActions(this.root);
 
-        return root;
+        return this.root;
     }
 
     private void setupContestList(View root) {
@@ -38,6 +40,19 @@ public class HomeFragment extends Fragment {
     private void listenToUserActions(View root) {
         this.homeViewModel.getContests().observe(getViewLifecycleOwner(), contestListAdapter::setContests);
 
-        root.findViewById(R.id.addContestFab).setOnClickListener(view -> Navigation.findNavController(root).navigate(R.id.action_nav_home_to_enterContestPlayers));
+        root.findViewById(R.id.addContestFab).setOnClickListener(view ->
+                Navigation.findNavController(this.root).navigate(R.id.action_nav_home_to_enterContestPlayers));
+    }
+
+    private void onContestClick(View contestView) {
+        // TODO: Show loader until contest is loaded (or fails)
+        String contestId = (String) contestView.getTag();
+        this.homeViewModel.selectContest(contestId).whenComplete((x, exception) -> {
+            if (exception != null) {
+                Snackbar.make(this.root, "Failed to load contest", Snackbar.LENGTH_LONG).show();
+            } else {
+                Navigation.findNavController(this.root).navigate(HomeFragmentDirections.actionNavHomeToContestControl(null));
+            }
+        });
     }
 }

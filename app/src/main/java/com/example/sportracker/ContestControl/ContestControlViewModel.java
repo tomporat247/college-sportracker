@@ -38,8 +38,9 @@ public class ContestControlViewModel extends ViewModel {
     }
 
     public void setUsers(List<User> users) {
+        List<User> validatedUsers = users != null ? users : ContestService.getInstance().getContest().getValue().getUsers();
         HashMap<Team, List<String>> teamToUsersValue = new HashMap<>();
-        teamToUsersValue.put(Team.OUT, users.stream().map(User::getId).collect(Collectors.toList()));
+        teamToUsersValue.put(Team.OUT, validatedUsers.stream().map(User::getId).collect(Collectors.toList()));
         teamToUsersValue.put(Team.A, new ArrayList<>());
         teamToUsersValue.put(Team.B, new ArrayList<>());
         ContestService.getInstance().setTeamToUserIds(teamToUsersValue);
