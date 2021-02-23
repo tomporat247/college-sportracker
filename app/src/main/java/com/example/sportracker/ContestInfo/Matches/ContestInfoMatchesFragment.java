@@ -41,6 +41,7 @@ public class ContestInfoMatchesFragment extends Fragment {
         return root;
     }
 
+    // TODO: Matches order is reversed
     private void setupMatchTable() {
         TableLayout tableLayout = this.root.findViewById(R.id.matchTable);
         TextView matchCountTextView = this.root.findViewById(R.id.matchCount);
@@ -68,7 +69,7 @@ public class ContestInfoMatchesFragment extends Fragment {
             if (dateToMatches.get(matchDate) == null) {
                 dateToMatches.put(matchDate, new ArrayList<>());
             }
-            dateToMatches.get(matchDate).add(match);
+            dateToMatches.get(matchDate).add(0, match);
         }
 
         return dateToMatches;
