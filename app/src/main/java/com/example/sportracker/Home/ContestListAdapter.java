@@ -16,6 +16,11 @@ import java.util.List;
 
 public class ContestListAdapter extends RecyclerView.Adapter<ContestListAdapter.ContestViewHolder> {
     private List<Contest> contests = Collections.emptyList();
+    private final View.OnClickListener onContestClick;
+
+    public ContestListAdapter(View.OnClickListener onContestClick) {
+        this.onContestClick = onContestClick;
+    }
 
     @NonNull
     @Override
@@ -27,6 +32,7 @@ public class ContestListAdapter extends RecyclerView.Adapter<ContestListAdapter.
     public void onBindViewHolder(@NonNull ContestViewHolder holder, int position) {
         final Contest currentContest = this.contests.get(position);
         holder.contestName.setText(currentContest.getName());
+        holder.setViewTag(currentContest.getId());
     }
 
     @Override
@@ -40,11 +46,18 @@ public class ContestListAdapter extends RecyclerView.Adapter<ContestListAdapter.
     }
 
     class ContestViewHolder extends RecyclerView.ViewHolder {
+        private final View root;
         private final TextView contestName;
 
         public ContestViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.contestName = itemView.findViewById(R.id.contestName);
+            this.root = itemView;
+            this.contestName = this.root.findViewById(R.id.contestName);
+            this.root.setOnClickListener(onContestClick);
+        }
+
+        public void setViewTag(String tag) {
+            this.root.setTag(tag);
         }
     }
 }

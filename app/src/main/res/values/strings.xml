@@ -13,4 +13,20 @@
 
     <string name="login">Sign In With Google</string>
     <string name="greeting">Your\'e just one moment away\nfrom enjoying Sportracker</string>
+    <string name="enter_user_email">Enter user email…</string>
+    <string name="fragment_contest_title">Contest</string>
+    <string name="outColumnHeaderText">Out</string>
+    <string name="teamAColumnHeader">Team A</string>
+    <string name="teamBColumnHeader">Team B</string>
+    <string name="infoButton">Info</string>
+    <string name="addMatchButton">Add</string>
+    <string name="saveContestButton">Save</string>
+    <string name="fragment_enter_users_title">Enter Users</string>
+    <string name="team_a_option">Team A</string>
+    <string name="team_b_option">Team B</string>
+    <string name="contest_info_title">Contest Info</string>
+    <string name="no_proofs_yet">no proofs yet</string>
+    <string name="match_info_winners_title">Winners</string>
+    <string name="match_info_losers_title">Losers</string>
+    <string name="enter_contest_name_hint">Enter Contest Name…</string>
 </resources>
