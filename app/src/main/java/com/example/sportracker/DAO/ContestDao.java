@@ -2,6 +2,7 @@ package com.example.sportracker.DAO;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -29,4 +30,8 @@ public interface ContestDao {
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addBasicContest(BasicContest contest);
+
+    @Transaction
+    @Delete
+    void deleteContest(BasicContest contest);
 }
