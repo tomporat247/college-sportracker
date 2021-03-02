@@ -70,7 +70,7 @@ public class EnterContestPlayersViewModel extends ViewModel {
     }
 
     public void createContest() {
-        ContestService.getInstance().setContest(this.getTempContest(this.users.getValue()));
+        ContestService.getInstance().setContest(new Contest(null, this.users.getValue(), new ArrayList<>(), new ArrayList<>()));
     }
 
     private boolean doesUserEmailExist(String email) {
@@ -87,29 +87,5 @@ public class EnterContestPlayersViewModel extends ViewModel {
         // TODO: Get self contest ids
         currentUsers.add(new User(currentUser.getUid(), currentUser.getEmail(), currentUser.getDisplayName(), currentUser.getPhotoUrl().toString(), null));
         this.users.setValue(currentUsers);
-    }
-
-    private Contest getTempContest(List<User> users) {
-        // TODO: Remove
-        ArrayList<Proof> tmpProofs = new ArrayList<>();
-        tmpProofs.add(new Proof("https://www.gannett-cdn.com/media/USATODAY/USATODAY/2013/05/13/05-13-2013-dwyane-wade-3_4.jpg", new Date()));
-        tmpProofs.add(new Proof("https://arc-anglerfish-arc2-prod-pmn.s3.amazonaws.com/public/QJGP36X3ANEQ7EARDLBRBHIDII.jpg", new Date()));
-        tmpProofs.add(new Proof("https://www.sportscasting.com/wp-content/uploads/2020/01/Los-Angeles-Laker-Kobe-Bryant.jpg", new Date()));
-        tmpProofs.add(new Proof("https://www.nbcsports.com/sites/rsnunited/files/styles/article_hero_image/public/article/hero/dame_0.jpg", new Date()));
-        ArrayList<Match> tmpMatches = new ArrayList<>();
-        ArrayList<String> tmpWinnerIds = new ArrayList<>();
-        tmpWinnerIds.add(users.get(0).getId());
-        tmpWinnerIds.add(users.get(1).getId());
-        ArrayList<String> tmpLoserIds = new ArrayList<>();
-        tmpLoserIds.add(users.get(1).getId());
-        tmpMatches.add(new Match(tmpWinnerIds, tmpLoserIds));
-        tmpMatches.add(new Match(tmpWinnerIds, tmpLoserIds));
-        Match differentDateMatch = new Match(tmpWinnerIds, tmpLoserIds);
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-        c.add(Calendar.MONTH, 1);
-        differentDateMatch.setDate(c.getTime());
-        tmpMatches.add(differentDateMatch);
-        return new Contest(null, users, tmpMatches, tmpProofs);
     }
 }
