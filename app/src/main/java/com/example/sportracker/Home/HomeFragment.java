@@ -35,11 +35,10 @@ public class HomeFragment extends Fragment {
     private void setupContestList(View root) {
         final RecyclerView recyclerView = root.findViewById(R.id.contests_recycler_view);
         RecyclerViewUtils.setupRecyclerView(recyclerView, requireContext(), this.contestListAdapter);
+        this.homeViewModel.getContests().observe(getViewLifecycleOwner(), contestListAdapter::setContests);
     }
 
     private void listenToUserActions(View root) {
-        this.homeViewModel.getContests().observe(getViewLifecycleOwner(), contestListAdapter::setContests);
-
         root.findViewById(R.id.addContestFab).setOnClickListener(view ->
                 Navigation.findNavController(this.root).navigate(R.id.action_nav_home_to_enterContestPlayers));
     }
