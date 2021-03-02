@@ -17,6 +17,7 @@ public class BasicContest {
     @NonNull
     private String id;
     private List<User> users;
+    private List<String> userIds;
     private String name;
     private List<Proof> proofs;
 
@@ -28,6 +29,7 @@ public class BasicContest {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.users = users;
+        this.userIds = users.stream().map(User::getId).collect(Collectors.toList());
         this.proofs = proofs;
         if (this.proofs == null) {
             this.proofs = new ArrayList<>();
@@ -38,6 +40,7 @@ public class BasicContest {
         this.id = (String) firestoreDocument.get("id");
         this.name = (String) firestoreDocument.get("name");
         this.users = null;
+        this.userIds = (List<String>) firestoreDocument.get("users");
         this.proofs = ((List<Map<String, Object>>) firestoreDocument.get("proofs")).stream().map(Proof::new).collect(Collectors.toList());
     }
 
@@ -64,8 +67,17 @@ public class BasicContest {
         return users;
     }
 
+    public List<String> getUserIds() {
+        return userIds;
+    }
+
+    public void setUserIds(List<String> userIds) {
+        this.userIds = userIds;
+    }
+
     public void setUsers(List<User> users) {
         this.users = users;
+        this.userIds = users.stream().map(User::getId).collect(Collectors.toList());
     }
 
     public String getName() {
