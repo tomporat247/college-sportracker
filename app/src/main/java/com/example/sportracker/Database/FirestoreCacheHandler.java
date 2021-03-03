@@ -15,8 +15,10 @@ public class FirestoreCacheHandler {
     private static final FirebaseAuth auth = FirebaseAuth.getInstance();
     private static final AppDatabase appDatabase = AppDatabase.getInstance();
     private static HashMap<String, Contest> idToContest;
+    private static boolean didReceivePushUpdates;
 
     public static void cacheServerContests() {
+        didReceivePushUpdates = false;
         idToContest = new HashMap<>();
         listenToUserContests();
     }
@@ -25,12 +27,16 @@ public class FirestoreCacheHandler {
         firestore
                 .collection("contests")
                 .whereArrayContains("users", auth.getCurrentUser().getUid())
-                .addSnapshotListener((value, error) -> {
+                .addSnapshotListener((value, error) -> Executors.newSingleThreadExecutor().execute(() -> {
+                    if (!didReceivePushUpdates) {
+                        AppDatabase.getInstance().clearAllTables();
+                        didReceivePushUpdates = true;
+                    }
                     List<Contest> contests =
                             value.getDocuments().stream().map(documentSnapshot ->
                                     new Contest(documentSnapshot.getData())).collect(Collectors.toList());
                     updateContests(contests);
-                });
+                }));
     }
 
     private static void updateContests(List<Contest> contestsInServer) {
@@ -42,17 +48,13 @@ public class FirestoreCacheHandler {
     }
 
     private static void deleteContest(Contest contest) {
-        Executors.newSingleThreadExecutor().execute(() -> {
-            appDatabase.contestDao().deleteContest(contest.getBasicContest());
-            appDatabase.matchesDao().deleteContestMatches(contest.getId());
-        });
+        appDatabase.contestDao().deleteContest(contest.getBasicContest());
+        appDatabase.matchesDao().deleteContestMatches(contest.getId());
     }
 
     private static void cacheContest(Contest contest) {
-        Executors.newSingleThreadExecutor().execute(() -> {
-            appDatabase.contestDao().addBasicContest(contest.getBasicContest());
-            appDatabase.matchesDao().deleteContestMatches(contest.getId());
-            appDatabase.matchesDao().addMatches(contest.getMatches());
-        });
+        appDatabase.contestDao().addBasicContest(contest.getBasicContest());
+        appDatabase.matchesDao().deleteContestMatches(contest.getId());
+        appDatabase.matchesDao().addMatches(contest.getMatches());
     }
 }

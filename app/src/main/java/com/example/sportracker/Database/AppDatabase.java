@@ -15,8 +15,6 @@ import com.example.sportracker.TypeConverters.GeneralTypeConverters;
 import com.example.sportracker.TypeConverters.ProofTypeConverter;
 import com.example.sportracker.TypeConverters.UserTypeConverter;
 
-import java.util.concurrent.Executors;
-
 @Database(entities = {BasicContest.class, Match.class}, version = 1, exportSchema = false)
 @TypeConverters({GeneralTypeConverters.class, UserTypeConverter.class, ProofTypeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
@@ -26,7 +24,6 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public static void setupDatabase(Context context) {
         instance = Room.databaseBuilder(context, AppDatabase.class, "sportracker").build();
-        Executors.newSingleThreadExecutor().execute(instance::clearAllTables);
     }
 
     public static AppDatabase getInstance() {
