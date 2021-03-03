@@ -69,8 +69,6 @@ public class ContestService {
                 .addOnSuccessListener(task -> completableFuture.complete("Done"))
                 .addOnFailureListener(completableFuture::completeExceptionally);
         return completableFuture;
-        // TODO: Save to users doc
-        // TODO: or even better use array-contains (https://stackoverflow.com/questions/54987399/firestore-search-array-contains-for-multiple-values) - VERIFY THIS WORKS
     }
 
     public void setContestName(String name) {
