@@ -52,14 +52,22 @@ public class HomeFragment extends Fragment {
     }
 
     private void onContestClick(View contestView) {
-        // TODO: Show loader until contest is loaded (or fails)
+        this.setLoadingBarVisibility(true);
         String contestId = (String) contestView.getTag();
         this.homeViewModel.selectContest(idToContest.get(contestId)).whenComplete((x, exception) -> {
+            this.setLoadingBarVisibility(false);
             if (exception != null) {
                 Snackbar.make(this.root, "Failed to load contest", Snackbar.LENGTH_LONG).show();
             } else {
                 Navigation.findNavController(this.root).navigate(HomeFragmentDirections.actionNavHomeToContestControl(null));
             }
         });
+    }
+
+    private void setLoadingBarVisibility(boolean isVisible) {
+        this.root.findViewById(R.id.contestLoader).setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        // TODO: Block going back or proceeding to a different fragment
+        this.root.findViewById(R.id.contests_recycler_view).setAlpha((float) (isVisible ? 0.4 : 1.0));
+        this.root.findViewById(R.id.addContestFab).setAlpha((float) (isVisible ? 0.4 : 1.0));
     }
 }
