@@ -77,7 +77,7 @@ public class BasicContest {
 
     public void setUsers(List<User> users) {
         this.users = users;
-        this.userIds = users.stream().map(User::getId).collect(Collectors.toList());
+        this.userIds = users != null ? users.stream().map(User::getId).collect(Collectors.toList()) : null;
     }
 
     public String getName() {
