@@ -103,6 +103,6 @@ public class ContestControlViewModel extends ViewModel {
     }
 
     private void addProofPhotoUrl(String url, Date date) {
-        ContestService.getInstance().addProofPhoto(new Proof(url, date));
+        ContestService.getInstance().addProofPhoto(new Proof(this.getContestId(), url, date));
     }
 }

@@ -11,6 +11,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.sportracker.Database.AppDatabase;
+import com.example.sportracker.Database.FirestoreCacheHandler;
 import com.google.android.material.navigation.NavigationView;
 
 // TODO: Disable the drawer swipe in most fragments
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        AppDatabase.setupDatabase(getApplicationContext());
+        FirestoreCacheHandler.cacheServerContests();
     }
 
     @Override

@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +35,19 @@ public class User implements Parcelable {
         this.setPhotoUrl((String) firestoreDocument.get("photoUrl"));
         this.setLastLoginDate(new Date((Long) firestoreDocument.get("lastLoginDate")));
         this.setContestIds(firestoreDocument.containsKey("contestIds") ? new ArrayList<>(Arrays.asList((String[]) firestoreDocument.get("contestIds"))) : null);
+    }
+
+    public Map<String, Object> toDoc() {
+        Map<String, Object> userMap = new HashMap<>();
+
+        userMap.put("id", this.id);
+        userMap.put("email", this.email);
+        userMap.put("name", this.name);
+        userMap.put("photoUrl", this.photoUrl);
+        userMap.put("lastLoginDate", this.lastLoginDate.getTime());
+        userMap.put("contestIds", contestIds);
+
+        return userMap;
     }
 
     protected User(Parcel in) {

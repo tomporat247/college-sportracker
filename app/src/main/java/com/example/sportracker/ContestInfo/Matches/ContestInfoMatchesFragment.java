@@ -19,6 +19,8 @@ import com.example.sportracker.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -41,7 +43,6 @@ public class ContestInfoMatchesFragment extends Fragment {
         return root;
     }
 
-    // TODO: Matches order is reversed
     private void setupMatchTable() {
         TableLayout tableLayout = this.root.findViewById(R.id.matchTable);
         TextView matchCountTextView = this.root.findViewById(R.id.matchCount);
@@ -49,10 +50,11 @@ public class ContestInfoMatchesFragment extends Fragment {
             tableLayout.removeAllViews();
             matchCountTextView.setText(String.format(Locale.US, "Match count: %d", matches.size()));
 
-            Map<String, List<Match>> dateToMatches = getDateToMatches(matches);
+            Map<Long, List<Match>> dateToMatches = getDateToMatches(matches);
 
-            for (Map.Entry<String, List<Match>> entry : dateToMatches.entrySet()) {
-                tableLayout.addView(this.createMatchDateDivider(tableLayout, entry.getKey()));
+            for (Map.Entry<Long, List<Match>> entry : dateToMatches.entrySet()) {
+                String dateString = DateFormat.format("dd.MM.yyyy", new Date(entry.getKey())).toString();
+                tableLayout.addView(this.createMatchDateDivider(tableLayout, dateString));
                 for (Match match : entry.getValue()) {
                     tableLayout.addView(this.createMatchTableRow(tableLayout, match));
                 }
@@ -61,15 +63,18 @@ public class ContestInfoMatchesFragment extends Fragment {
 
     }
 
-    private SortedMap<String, List<Match>> getDateToMatches(List<Match> matches) {
-        SortedMap<String, List<Match>> dateToMatches = new TreeMap<>();
+    private SortedMap<Long, List<Match>> getDateToMatches(List<Match> matches) {
+        SortedMap<Long, List<Match>> dateToMatches = new TreeMap<>(Collections.reverseOrder());
 
         for (Match match : matches) {
-            String matchDate = DateFormat.format("dd.MM.yyyy", match.getDate()).toString();
+            Date originalDate = match.getDate();
+            Date cleanDate = new Date(originalDate.getYear(), originalDate.getMonth(), originalDate.getDay());
+
+            Long matchDate = cleanDate.getTime();
             if (dateToMatches.get(matchDate) == null) {
                 dateToMatches.put(matchDate, new ArrayList<>());
             }
-            dateToMatches.get(matchDate).add(0, match);
+            dateToMatches.get(matchDate).add(match);
         }
 
         return dateToMatches;
