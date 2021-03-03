@@ -84,7 +84,6 @@ public class EnterContestPlayersViewModel extends ViewModel {
     private void addSelfUser() {
         final ArrayList<User> currentUsers = new ArrayList<>();
         final FirebaseUser currentUser = this.auth.getCurrentUser();
-        // TODO: Get self contest ids
         currentUsers.add(new User(currentUser.getUid(), currentUser.getEmail(), currentUser.getDisplayName(), currentUser.getPhotoUrl().toString(), null));
         this.users.setValue(currentUsers);
     }
