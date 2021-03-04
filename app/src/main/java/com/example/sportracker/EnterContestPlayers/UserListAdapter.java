@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sportracker.Models.User;
 import com.example.sportracker.R;
+import com.example.sportracker.Utils.CircleTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
@@ -35,7 +36,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         final User currentUser = this.users.get(position);
         holder.userEmail.setText(currentUser.getEmail());
         holder.userName.setText(currentUser.getName());
-        Picasso.get().load(currentUser.getPhotoUrl()).into(holder.userImage);
+        Picasso.get().load(currentUser.getPhotoUrl()).transform(new CircleTransform()).into(holder.userImage);
     }
 
     @Override

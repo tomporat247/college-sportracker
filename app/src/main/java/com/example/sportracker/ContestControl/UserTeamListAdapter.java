@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sportracker.Models.User;
 import com.example.sportracker.R;
+import com.example.sportracker.Utils.CircleTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
@@ -31,7 +32,7 @@ public class UserTeamListAdapter extends RecyclerView.Adapter<UserTeamListAdapte
     public void onBindViewHolder(@NonNull UserInTeamViewHolder holder, int position) {
         final User currentUser = this.users.get(position);
         holder.userName.setText(currentUser.getName());
-        Picasso.get().load(currentUser.getPhotoUrl()).into(holder.userImage);
+        Picasso.get().load(currentUser.getPhotoUrl()).transform(new CircleTransform()).into(holder.userImage);
         holder.setTag(currentUser.getId());
         holder.allowDrag();
     }

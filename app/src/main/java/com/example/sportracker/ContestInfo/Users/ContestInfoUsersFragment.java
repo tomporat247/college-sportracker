@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.sportracker.Models.ContestUserDetails;
 import com.example.sportracker.Models.User;
 import com.example.sportracker.R;
+import com.example.sportracker.Utils.CircleTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
@@ -54,7 +55,7 @@ public class ContestInfoUsersFragment extends Fragment {
         ((TextView) userTableRow.findViewById(R.id.userLoses)).setText(String.valueOf(userDetails.getLossAmount()));
         ((TextView) userTableRow.findViewById(R.id.userWinLossRatio)).setText(String.format(Locale.US, "%.2f", userDetails.getWinLossRatio()));
         ((TextView) userTableRow.findViewById(R.id.userNameInUserTable)).setText(user.getName());
-        Picasso.get().load(user.getPhotoUrl()).into((ImageView) userTableRow.findViewById(R.id.userImageInUserTable));
+        Picasso.get().load(user.getPhotoUrl()).transform(new CircleTransform()).into((ImageView) userTableRow.findViewById(R.id.userImageInUserTable));
 
         return userTableRow;
     }

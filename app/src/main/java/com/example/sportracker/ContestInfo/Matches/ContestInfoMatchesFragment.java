@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.sportracker.Models.Match;
 import com.example.sportracker.Models.User;
 import com.example.sportracker.R;
+import com.example.sportracker.Utils.CircleTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -106,7 +107,7 @@ public class ContestInfoMatchesFragment extends Fragment {
 
     private View createUserInMatchRow(User user, ViewGroup container) {
         View userInMatchRow = getLayoutInflater().inflate(R.layout.user_in_match_row, container, false);
-        Picasso.get().load(user.getPhotoUrl()).into((ImageView) userInMatchRow.findViewById(R.id.userInMatchImage));
+        Picasso.get().load(user.getPhotoUrl()).transform(new CircleTransform()).into((ImageView) userInMatchRow.findViewById(R.id.userInMatchImage));
         ((TextView) userInMatchRow.findViewById(R.id.userInMatchName)).setText(user.getName());
         return userInMatchRow;
     }
