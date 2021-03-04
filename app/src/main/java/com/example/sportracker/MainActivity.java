@@ -16,7 +16,7 @@ import com.example.sportracker.Database.FirestoreCacheHandler;
 import com.example.sportracker.Utils.DrawerLocker;
 import com.google.android.material.navigation.NavigationView;
 
-// TODO: Add a profile page
+// TODO: Change the name, email and thumbnail in drawer to match connected user
 public class MainActivity extends AppCompatActivity implements DrawerLocker {
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_gallery)
                 .setDrawerLayout(this.drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
