@@ -202,7 +202,6 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
 
     private void setLoadingBarVisibility(boolean isVisible) {
         this.root.findViewById(R.id.savingLoader).setVisibility(isVisible ? View.VISIBLE : View.GONE);
-        // TODO: Block going back or proceeding to a different fragment
         this.root.findViewById(R.id.contestInfoContainer).setAlpha((float) (isVisible ? 0.4 : 1.0));
     }
 }

@@ -30,8 +30,6 @@ public class ContestInfoProofsListAdapter extends RecyclerView.Adapter<ContestIn
     public void onBindViewHolder(@NonNull ContestInfoProofsListAdapter.ProofViewHolder holder, int position) {
         final Proof currentProof = this.proofs.get(position);
         holder.proofDate.setText(DateFormat.format("dd.MM.yyyy HH:mm:ss", currentProof.getDate()));
-        // TODO: Use actual correct number
-        holder.proofMatchCount.setText("3" + " matches logged");
         Picasso.get().load(currentProof.getPhotoUrl()).into(holder.proofImage);
     }
 
@@ -47,13 +45,11 @@ public class ContestInfoProofsListAdapter extends RecyclerView.Adapter<ContestIn
 
     class ProofViewHolder extends RecyclerView.ViewHolder {
         private final TextView proofDate;
-        private final TextView proofMatchCount;
         private final ImageView proofImage;
 
         public ProofViewHolder(@NonNull View itemView) {
             super(itemView);
             this.proofDate = itemView.findViewById(R.id.proofDate);
-            this.proofMatchCount = itemView.findViewById(R.id.proofMatchCount);
             this.proofImage = itemView.findViewById(R.id.proofImage);
         }
     }

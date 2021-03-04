@@ -69,7 +69,6 @@ public class HomeFragment extends Fragment {
 
     private void setLoadingBarVisibility(boolean isVisible) {
         this.root.findViewById(R.id.contestLoader).setVisibility(isVisible ? View.VISIBLE : View.GONE);
-        // TODO: Block going back or proceeding to a different fragment
         this.root.findViewById(R.id.contests_recycler_view).setAlpha((float) (isVisible ? 0.4 : 1.0));
         this.root.findViewById(R.id.addContestFab).setAlpha((float) (isVisible ? 0.4 : 1.0));
     }
