@@ -21,6 +21,15 @@ public class HomeViewModel extends ViewModel {
         return AppDatabase.getInstance().contestDao().getAllContests();
     }
 
+    public CompletableFuture<Object> deleteContest(String contestId) {
+        CompletableFuture<Object> completableFuture = new CompletableFuture<>();
+        this.firestore.collection("contests").document(contestId)
+                .delete()
+                .addOnFailureListener(completableFuture::completeExceptionally)
+        .addOnSuccessListener(x -> completableFuture.complete("done"));
+        return completableFuture;
+    }
+
     public CompletableFuture<Object> selectContest(Contest selectedContest) {
         CompletableFuture<Object> completableFuture = new CompletableFuture<>();
 
