@@ -23,7 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
-// TODO: Change the name, email and thumbnail in drawer to match connected user
 public class MainActivity extends AppCompatActivity implements DrawerLocker {
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
