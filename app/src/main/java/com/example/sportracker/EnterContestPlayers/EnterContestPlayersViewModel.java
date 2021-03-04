@@ -7,8 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sportracker.Models.Contest;
-import com.example.sportracker.Models.Match;
-import com.example.sportracker.Models.Proof;
 import com.example.sportracker.Models.User;
 import com.example.sportracker.Services.ContestService;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,8 +15,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
