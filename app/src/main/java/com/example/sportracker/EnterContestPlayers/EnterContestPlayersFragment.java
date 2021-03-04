@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sportracker.Models.User;
 import com.example.sportracker.R;
 import com.example.sportracker.Utils.DrawableClickListener;
+import com.example.sportracker.Utils.DrawerLocker;
 import com.example.sportracker.Utils.EditTextWithDrawable;
 import com.example.sportracker.Utils.Keyboard;
 import com.example.sportracker.Utils.RecyclerViewUtils;
@@ -37,6 +38,8 @@ public class EnterContestPlayersFragment extends Fragment {
 
         this.setupUserList();
         this.listenToUserActions();
+
+        ((DrawerLocker) getActivity()).setDrawerEnabled(false);
 
         return root;
     }

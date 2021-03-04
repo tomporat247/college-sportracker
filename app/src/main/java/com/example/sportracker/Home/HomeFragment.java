@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sportracker.Models.Contest;
 import com.example.sportracker.R;
+import com.example.sportracker.Utils.DrawerLocker;
 import com.example.sportracker.Utils.RecyclerViewUtils;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -33,6 +34,8 @@ public class HomeFragment extends Fragment {
 
         this.setupContestList(this.root);
         this.listenToUserActions(this.root);
+
+        ((DrawerLocker) getActivity()).setDrawerEnabled(true);
 
         return this.root;
     }

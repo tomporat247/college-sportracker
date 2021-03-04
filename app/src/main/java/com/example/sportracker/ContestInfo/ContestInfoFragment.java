@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.sportracker.R;
+import com.example.sportracker.Utils.DrawerLocker;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.HashMap;
@@ -28,6 +29,8 @@ public class ContestInfoFragment extends Fragment {
         this.tabPositionToText.put(2, "Proofs");
 
         this.setupViewPager();
+
+        ((DrawerLocker) getActivity()).setDrawerEnabled(false);
 
         return root;
     }
