@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -61,11 +62,11 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
         switch (item.getItemId()) {
             case R.id.teamAOption:
                 this.viewModel.addMatch(Team.A);
-                Snackbar.make(this.root, "Match Added", 500).show();
+                Toast.makeText(getContext(), "Match Added", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.teamBOption:
                 this.viewModel.addMatch(Team.B);
-                Snackbar.make(this.root, "Match Added", 500).show();
+                Toast.makeText(getContext(), "Match Added", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return false;
