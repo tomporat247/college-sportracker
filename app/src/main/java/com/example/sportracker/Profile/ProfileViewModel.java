@@ -4,16 +4,48 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ProfileViewModel extends ViewModel {
+import com.example.sportracker.Models.Contest;
+import com.example.sportracker.Models.UserStatistics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-    private MutableLiveData<String> mText;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+
+public class ProfileViewModel extends ViewModel {
+    private MutableLiveData<UserStatistics> userStatistics;
 
     public ProfileViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        this.userStatistics = new MutableLiveData<>();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public CompletableFuture<Object> loadUserData(String id) {
+        CompletableFuture<Object> completableFuture = new CompletableFuture<>();
+
+        String userId = id != null ? id : FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(userId).get()
+                .addOnFailureListener(completableFuture::completeExceptionally)
+                .addOnSuccessListener(userDocumentSnapshot ->
+                        FirebaseFirestore.getInstance()
+                                .collection("contests")
+                                .whereArrayContains("users", userId)
+                                .addSnapshotListener((value, error) -> {
+                                    List<Contest> contests =
+                                            value.getDocuments().stream().map(contestDocumentSnapshot ->
+                                                    new Contest(contestDocumentSnapshot.getData())).collect(Collectors.toList());
+                                    this.userStatistics.setValue(new UserStatistics(userId, userDocumentSnapshot.getData(), contests));
+                                    if (!completableFuture.isDone()) {
+                                        completableFuture.complete("");
+                                    }
+                                }));
+        return completableFuture;
+    }
+
+    public LiveData<UserStatistics> getUserStatistics() {
+        return this.userStatistics;
     }
 }

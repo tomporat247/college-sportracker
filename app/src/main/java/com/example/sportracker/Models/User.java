@@ -37,6 +37,9 @@ public class User implements Parcelable {
         this.setContestIds(firestoreDocument.containsKey("contestIds") ? new ArrayList<>(Arrays.asList((String[]) firestoreDocument.get("contestIds"))) : null);
     }
 
+    public User() {
+    }
+
     public Map<String, Object> toDoc() {
         Map<String, Object> userMap = new HashMap<>();
 

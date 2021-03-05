@@ -21,11 +21,21 @@ public class ProfileFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel =
                 new ViewModelProvider(this).get(ProfileViewModel.class);
+        this.handleIncomingArguments();
 
         this.root = inflater.inflate(R.layout.fragment_profile, container, false);
 
         ((DrawerLocker) getActivity()).setDrawerEnabled(true);
 
         return this.root;
+    }
+
+    private void handleIncomingArguments() {
+        this.profileViewModel.loadUserData(null);
+        this.profileViewModel.getUserStatistics().observe(getViewLifecycleOwner(), userStatistics -> {
+            int a = 2;
+            a++;
+            a--;
+        });
     }
 }
