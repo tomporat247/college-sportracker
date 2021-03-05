@@ -23,6 +23,14 @@ public class UserStatistics extends User {
         this.calculateStatistics();
     }
 
+    public int getTotalWins() {
+        return totalWins;
+    }
+
+    public int getTotalLosses() {
+        return totalLosses;
+    }
+
     private void calculateStatistics() {
         this.totalWins = 0;
         this.totalLosses = 0;

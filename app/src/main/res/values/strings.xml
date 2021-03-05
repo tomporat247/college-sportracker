@@ -26,4 +26,8 @@
     <string name="match_info_winners_title">Winners</string>
     <string name="match_info_losers_title">Losers</string>
     <string name="enter_contest_name_hint">Enter Contest Name…</string>
+    <string name="profile_total_wins">Total Wins :</string>
+    <string name="profile_total_losses">Total Losses :</string>
+    <string name="profile_win_loss_ratio">Win/Loss Ratio :</string>
+    <string name="profile_plus_minus">+ / - :</string>
 </resources>

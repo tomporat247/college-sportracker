@@ -8,21 +8,21 @@
     tools:context=".Profile.ProfileFragment">
 
     <ImageView
+        android:id="@+id/profileImage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:src="@drawable/ic_baseline_person_24" />
+        android:layout_weight="1"
+        android:padding="16sp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_weight="2">
 
         <TextView
             android:id="@+id/profileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tom Porat"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:text="tomporat247@gmail.com"
             android:textColor="@color/app_grey"
             android:textSize="12sp"
             android:textStyle="italic"
@@ -43,7 +42,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:text="Total Wins :"
+            android:text="@string/profile_total_wins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -52,7 +51,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:text="Total Losses :"
+            android:text="@string/profile_total_losses"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -61,7 +60,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:text="Win/Loss Ratio :"
+            android:text="@string/profile_win_loss_ratio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -70,7 +69,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:text="+ / - :"
+            android:text="@string/profile_plus_minus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -79,7 +78,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:text="51"
             android:id="@+id/profileTotalWins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,7 +87,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:text="20"
             android:id="@+id/profileTotalLosses"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -99,7 +96,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:text="0.78"
             android:id="@+id/profileWinLossRatio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -109,7 +105,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:text="34"
             android:id="@+id/profilePlusMinus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -123,7 +118,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="Last seen at: 21/2/2021 17:52:23"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
