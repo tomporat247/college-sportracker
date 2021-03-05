@@ -1,7 +1,6 @@
 package com.example.sportracker;
 
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,13 +47,6 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker {
         AppDatabase.setupDatabase(getApplicationContext());
         FirestoreCacheHandler.cacheServerContests();
         this.showUserDataInDrawerHeader();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
