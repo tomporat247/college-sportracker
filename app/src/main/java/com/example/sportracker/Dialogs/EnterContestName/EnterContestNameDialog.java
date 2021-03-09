@@ -38,7 +38,6 @@ public class EnterContestNameDialog extends DialogFragment {
                 .setPositiveButton("CONTINUE", (dialog, id) -> {
                     String contestName = ((EditText) dialogView.findViewById(R.id.contestNameEditText)).getText().toString();
                     if (contestName == null || contestName.length() == 0) {
-                        // TODO: Display this message without closing the dialog
                         Toast.makeText(getContext(), "Insert a contest name", Toast.LENGTH_SHORT).show();
                         completableFuture.complete(null);
                     } else {
