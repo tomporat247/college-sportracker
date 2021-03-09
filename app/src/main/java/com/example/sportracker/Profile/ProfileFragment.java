@@ -19,7 +19,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 
-// TODO: When tapping on a user (contestInfo/matchInfo) - navigate to this page with the correct user id
 public class ProfileFragment extends Fragment {
     private View root;
     private ProfileViewModel profileViewModel;
@@ -40,7 +39,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void handleIncomingArguments() {
-        this.profileViewModel.loadUserData(null);
+        this.profileViewModel.loadUserData(ProfileFragmentArgs.fromBundle(getArguments()).getId());
     }
 
     private void listenToUserStatistics() {

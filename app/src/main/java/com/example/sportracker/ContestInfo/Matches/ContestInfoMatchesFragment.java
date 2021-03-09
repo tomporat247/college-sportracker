@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
+import com.example.sportracker.ContestInfo.ContestInfoFragmentDirections;
 import com.example.sportracker.Models.Match;
 import com.example.sportracker.Models.User;
 import com.example.sportracker.R;
@@ -109,6 +111,10 @@ public class ContestInfoMatchesFragment extends Fragment {
         View userInMatchRow = getLayoutInflater().inflate(R.layout.user_in_match_row, container, false);
         Picasso.get().load(user.getPhotoUrl()).transform(new CircleTransform()).into((ImageView) userInMatchRow.findViewById(R.id.userInMatchImage));
         ((TextView) userInMatchRow.findViewById(R.id.userInMatchName)).setText(user.getName());
+
+        userInMatchRow.setOnClickListener(view -> Navigation.findNavController(this.root).navigate(
+                ContestInfoFragmentDirections.actionContestInfoToNavProfile().setId(user.getId())));
+
         return userInMatchRow;
     }
 }

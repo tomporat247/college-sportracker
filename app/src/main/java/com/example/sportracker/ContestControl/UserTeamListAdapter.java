@@ -20,7 +20,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class UserTeamListAdapter extends RecyclerView.Adapter<UserTeamListAdapter.UserInTeamViewHolder> {
+    private final View.OnClickListener onUserClick;
     private List<User> users = Collections.emptyList();
+
+    public UserTeamListAdapter(View.OnClickListener onUserClick) {
+        this.onUserClick = onUserClick;
+    }
 
     @NonNull
     @Override
@@ -35,6 +40,7 @@ public class UserTeamListAdapter extends RecyclerView.Adapter<UserTeamListAdapte
         Picasso.get().load(currentUser.getPhotoUrl()).transform(new CircleTransform()).into(holder.userImage);
         holder.setTag(currentUser.getId());
         holder.allowDrag();
+        holder.listenToClick();
     }
 
     @Override
@@ -72,6 +78,10 @@ public class UserTeamListAdapter extends RecyclerView.Adapter<UserTeamListAdapte
                 v.startDragAndDrop(data, dragShadowBuilder, v, 0);
                 return true;
             });
+        }
+
+        private void listenToClick() {
+            this.view.setOnClickListener(onUserClick);
         }
     }
 }

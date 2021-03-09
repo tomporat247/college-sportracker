@@ -13,6 +13,7 @@ import com.example.sportracker.Models.Contest;
 
 import java.util.List;
 
+// TODO: Add insert - just for the show - do so before updating firebase
 @Dao
 public interface ContestDao {
     @Transaction

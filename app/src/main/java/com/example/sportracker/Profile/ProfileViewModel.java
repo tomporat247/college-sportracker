@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 public class ProfileViewModel extends ViewModel {
-    private MutableLiveData<UserStatistics> userStatistics;
+    private final MutableLiveData<UserStatistics> userStatistics;
 
     public ProfileViewModel() {
         this.userStatistics = new MutableLiveData<>();

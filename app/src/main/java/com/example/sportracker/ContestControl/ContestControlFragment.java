@@ -98,14 +98,14 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
     private void handleIncomingArguments() {
         ContestControlFragmentArgs args = ContestControlFragmentArgs.fromBundle(getArguments());
         User[] users = args.getUsers();
-        this.viewModel.setUsers(users != null ? new ArrayList<>(Arrays.asList(users)): null);
+        this.viewModel.setUsers(users != null ? new ArrayList<>(Arrays.asList(users)) : null);
     }
 
     private void initializeMaps() {
         this.teamToAdapter = new HashMap<>();
-        this.teamToAdapter.put(Team.OUT, new UserTeamListAdapter());
-        this.teamToAdapter.put(Team.A, new UserTeamListAdapter());
-        this.teamToAdapter.put(Team.B, new UserTeamListAdapter());
+        this.teamToAdapter.put(Team.OUT, new UserTeamListAdapter(this::onUserClick));
+        this.teamToAdapter.put(Team.A, new UserTeamListAdapter(this::onUserClick));
+        this.teamToAdapter.put(Team.B, new UserTeamListAdapter(this::onUserClick));
         this.teamToViewId = new HashMap<>();
         this.viewIdToTeam = new HashMap<>();
         this.teamToViewId.put(Team.OUT, R.id.teamOutRecyclerView);
@@ -204,5 +204,11 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
     private void setLoadingBarVisibility(boolean isVisible) {
         this.root.findViewById(R.id.savingLoader).setVisibility(isVisible ? View.VISIBLE : View.GONE);
         this.root.findViewById(R.id.contestInfoContainer).setAlpha((float) (isVisible ? 0.4 : 1.0));
+    }
+
+    private void onUserClick(View userView) {
+        String userId = (String) userView.getTag();
+        Navigation.findNavController(this.root).navigate(
+                ContestControlFragmentDirections.actionContestControlToNavProfile().setId(userId));
     }
 }

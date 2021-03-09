@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
+import com.example.sportracker.ContestInfo.ContestInfoFragmentDirections;
 import com.example.sportracker.Models.ContestUserDetails;
 import com.example.sportracker.Models.User;
 import com.example.sportracker.R;
@@ -56,6 +58,9 @@ public class ContestInfoUsersFragment extends Fragment {
         ((TextView) userTableRow.findViewById(R.id.userWinLossRatio)).setText(String.format(Locale.US, "%.2f", userDetails.getWinLossRatio()));
         ((TextView) userTableRow.findViewById(R.id.userNameInUserTable)).setText(user.getName());
         Picasso.get().load(user.getPhotoUrl()).transform(new CircleTransform()).into((ImageView) userTableRow.findViewById(R.id.userImageInUserTable));
+
+        userTableRow.setOnClickListener(view -> Navigation.findNavController(this.root).navigate(
+                ContestInfoFragmentDirections.actionContestInfoToNavProfile().setId(user.getId())));
 
         return userTableRow;
     }
