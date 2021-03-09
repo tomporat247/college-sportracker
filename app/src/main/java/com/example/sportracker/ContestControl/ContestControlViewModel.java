@@ -63,7 +63,7 @@ public class ContestControlViewModel extends ViewModel {
     }
 
     public CompletableFuture<Object> saveContest() {
-        return ContestService.getInstance().saveToFirestore();
+        return ContestService.getInstance().save();
     }
 
     public CompletableFuture<String> uploadPhotoToStorageBucket(Bitmap photo) {

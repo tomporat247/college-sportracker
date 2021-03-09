@@ -1,6 +1,5 @@
 package com.example.sportracker.Models;
 
-// TODO: Delete this - use UserStatistics
 public class ContestUserDetails {
     private int winAmount;
     private int lossAmount;

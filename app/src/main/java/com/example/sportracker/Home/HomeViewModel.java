@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class HomeViewModel extends ViewModel {
@@ -23,10 +24,14 @@ public class HomeViewModel extends ViewModel {
 
     public CompletableFuture<Object> deleteContest(String contestId) {
         CompletableFuture<Object> completableFuture = new CompletableFuture<>();
-        this.firestore.collection("contests").document(contestId)
-                .delete()
-                .addOnFailureListener(completableFuture::completeExceptionally)
-        .addOnSuccessListener(x -> completableFuture.complete("done"));
+        Executors.newSingleThreadExecutor().execute(() -> {
+            AppDatabase.getInstance().contestDao().deleteContest(contestId);
+            AppDatabase.getInstance().matchesDao().deleteContestMatches(contestId);
+            this.firestore.collection("contests").document(contestId)
+                    .delete()
+                    .addOnFailureListener(completableFuture::completeExceptionally)
+                    .addOnSuccessListener(x -> completableFuture.complete("done"));
+        });
         return completableFuture;
     }
 

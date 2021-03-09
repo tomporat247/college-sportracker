@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.example.sportracker.Database.AppDatabase;
 import com.example.sportracker.Models.Contest;
 import com.example.sportracker.Models.Proof;
 import com.example.sportracker.Models.Team;
@@ -17,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class ContestService {
@@ -60,14 +62,18 @@ public class ContestService {
                 )));
     }
 
-    public CompletableFuture<Object> saveToFirestore() {
+    public CompletableFuture<Object> save() {
         CompletableFuture<Object> completableFuture = new CompletableFuture<>();
-        Contest contest = this.contest.getValue();
-        Task<Void> writeTask = this.firestore.collection("contests").document(contest.getId()).set(contest.toDoc(), SetOptions.merge());
+        Executors.newSingleThreadExecutor().execute(() -> {
+            Contest contest = this.contest.getValue();
+            AppDatabase.getInstance().contestDao().addBasicContest(contest.getBasicContest());
+            AppDatabase.getInstance().matchesDao().addMatches(contest.getMatches());
+            Task<Void> writeTask = this.firestore.collection("contests").document(contest.getId()).set(contest.toDoc(), SetOptions.merge());
 
-        writeTask
-                .addOnSuccessListener(task -> completableFuture.complete("Done"))
-                .addOnFailureListener(completableFuture::completeExceptionally);
+            writeTask
+                    .addOnSuccessListener(task -> completableFuture.complete("Done"))
+                    .addOnFailureListener(completableFuture::completeExceptionally);
+        });
         return completableFuture;
     }
 
