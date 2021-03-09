@@ -24,6 +24,7 @@ import com.example.sportracker.Dialogs.EnterContestName.EnterContestNameDialog;
 import com.example.sportracker.Models.Team;
 import com.example.sportracker.Models.User;
 import com.example.sportracker.R;
+import com.example.sportracker.Utils.DrawerLocker;
 import com.example.sportracker.Utils.RecyclerViewUtils;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -52,6 +53,8 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
         this.initializeMaps();
         this.setupTeamLists();
         this.listenToActionClicks();
+
+        ((DrawerLocker) getActivity()).setDrawerEnabled(false);
 
         return root;
     }
