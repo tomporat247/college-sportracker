@@ -89,9 +89,9 @@ public class ContestControlFragment extends Fragment implements PopupMenu.OnMenu
                         if (firestoreException != null) {
                             Snackbar.make(this.root, "An error occurred during contest save", Snackbar.LENGTH_LONG).show();
                         } else {
-                            this.setLoadingBarVisibility(false);
                             Snackbar.make(this.root, "Contest saved", Snackbar.LENGTH_LONG).show();
                         }
+                        this.setLoadingBarVisibility(false);
                     });
                 }
             });

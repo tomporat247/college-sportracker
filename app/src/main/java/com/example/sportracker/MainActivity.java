@@ -1,5 +1,6 @@
 package com.example.sportracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.sportracker.Database.AppDatabase;
 import com.example.sportracker.Database.FirestoreCacheHandler;
+import com.example.sportracker.Login.LoginActivity;
 import com.example.sportracker.Utils.CircleTransform;
 import com.example.sportracker.Utils.DrawerLocker;
 import com.google.android.material.navigation.NavigationView;
@@ -69,5 +71,11 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker {
         ((TextView) headerView.findViewById(R.id.drawerUserEmail)).setText(user.getEmail());
         ((TextView) headerView.findViewById(R.id.drawerUserName)).setText(user.getDisplayName());
         Picasso.get().load(user.getPhotoUrl()).transform(new CircleTransform()).into((ImageView) headerView.findViewById(R.id.drawerUserImage));
+
+        headerView.findViewById(R.id.logOut).setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+        });
     }
 }
