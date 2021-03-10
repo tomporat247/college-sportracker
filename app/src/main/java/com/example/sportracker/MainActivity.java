@@ -19,6 +19,9 @@ import com.example.sportracker.Database.FirestoreCacheHandler;
 import com.example.sportracker.Login.LoginActivity;
 import com.example.sportracker.Utils.CircleTransform;
 import com.example.sportracker.Utils.DrawerLocker;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -72,10 +75,21 @@ public class MainActivity extends AppCompatActivity implements DrawerLocker {
         ((TextView) headerView.findViewById(R.id.drawerUserName)).setText(user.getDisplayName());
         Picasso.get().load(user.getPhotoUrl()).transform(new CircleTransform()).into((ImageView) headerView.findViewById(R.id.drawerUserImage));
 
-        headerView.findViewById(R.id.logOut).setOnClickListener(v -> {
-            FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
-        });
+        headerView.findViewById(R.id.logOut).setOnClickListener(v -> this.signOut());
+    }
+
+    private void signOut() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, gso);
+        FirebaseAuth.getInstance().signOut();
+
+        googleSignInClient.signOut().addOnCompleteListener(this,
+                task -> {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                });
     }
 }
