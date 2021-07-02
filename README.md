@@ -11,4 +11,5 @@ This app has some code that exists only because the course required it, examples
 
 1. firebase cache
 2. ROOM
+3. Composition instead of inheritance
 
